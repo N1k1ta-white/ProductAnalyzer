@@ -1,7 +1,5 @@
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
-import store from "@/store/store.ts";
-import {fetchDeleteImageToProduct} from "@/store/productsSlice.ts";
 
 interface DragAndDropProps {
     images: {isFromDataBase: boolean, url: string}[],
@@ -33,8 +31,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ onImagesUploaded, images, cla
             if(!image.isFromDataBase) {
                 onImagesUploaded(images.filter((img) => img.url !== image.url));
             } else {
-                await store.dispatch(fetchDeleteImageToProduct(image.url)).unwrap()
-                onImagesUploaded(images.filter((img) => img.url !== image.url));
+
             }
         } catch (error) {
             alert("Ошибка при удалении изображения: " + (error as Error).message);
