@@ -8,12 +8,12 @@ import {updateUser} from "@/store/authSlice.ts";
 export function Sidebar() {
     const navigate = useNavigate()
     const links = [
-        { path: "/", label: "Обзор", icon: <Home className="size-5" /> }, // Обзор
-        { path: "/products", label: "Товары", icon: <Boxes className="size-5" /> }, // Товары
-        { path: "/orders", label: "Заказы", icon: <ClipboardList className="size-5" /> }, // Заказы (список)
-        { path: "/payments", label: "Платежи", icon: <CreditCard className="size-5" /> },
-        { path: "/notifications", label: "Уведомления", icon: <Bell className="size-5" /> },
-        { path: "/settings", label: "Настройки", icon: <Settings className="size-5" /> }, // Настройки
+        { path: "/", label: "Dashboard", icon: <Home className="size-5" /> }, // Обзор
+        { path: "/products", label: "Products", icon: <Boxes className="size-5" /> }, // Товары
+        { path: "/orders", label: "Orders", icon: <ClipboardList className="size-5" /> }, // Заказы (список)
+        { path: "/payments", label: "Payments", icon: <CreditCard className="size-5" /> },
+        { path: "/notifications", label: "Notifications", icon: <Bell className="size-5" /> },
+        { path: "/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
     ];
 
     const handleLogout = () => {
@@ -41,7 +41,7 @@ export function Sidebar() {
                     </NavLink>
                 </div>
             ))}
-            <Button onClick={handleLogout} className="w-full bg-red-600 text-white p-2 rounded mt-auto">Выйти</Button>
+            <Button onClick={handleLogout} className="w-full bg-red-600 text-white p-2 rounded mt-auto">Log out</Button>
         </div>
     )
 }
