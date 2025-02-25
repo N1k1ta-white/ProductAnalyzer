@@ -1,8 +1,12 @@
 import { Bell, Boxes, ClipboardList, CreditCard, Home, Settings } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import {NavLink, useNavigate} from "react-router-dom";
 import {cn} from "@/lib/utils.ts";
+import {Button} from "@/components/ui/button.tsx";
+import store from "@/store/store.ts";
+import {updateUser} from "@/store/authSlice.ts";
 
 export function Sidebar() {
+    const navigate = useNavigate()
     const links = [
         { path: "/", label: "Обзор", icon: <Home className="size-5" /> }, // Обзор
         { path: "/products", label: "Товары", icon: <Boxes className="size-5" /> }, // Товары
@@ -12,11 +16,17 @@ export function Sidebar() {
         { path: "/settings", label: "Настройки", icon: <Settings className="size-5" /> }, // Настройки
     ];
 
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        store.dispatch(updateUser(null))
+        navigate("/login")
+    }
+
     return (
         <div className="flex flex-col gap-2 p-2.5 h-full">
             <h1 className="text-2xl font-bold pt-7 pb-7 text-center"><i>Product Analyzer</i></h1>
             {links.map((link) => (
-                <div className={`w-full ${link.path === '/settings' && 'mt-auto'}`} key={link.path}>
+                <div className={`w-full`} key={link.path}>
                     <NavLink
                         to={link.path}
                         className={({ isActive }) =>
@@ -31,6 +41,9 @@ export function Sidebar() {
                     </NavLink>
                 </div>
             ))}
+            <Button onClick={handleLogout} className="w-full bg-red-600 text-white p-2 rounded mt-auto">Выйти</Button>
         </div>
     )
 }
+
+// ${link.path === '/settings' && 'mt-auto'}

@@ -1,7 +1,6 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
-// import store from "@/store/store.ts";
-// import fetchData from "@/lib/fetch.ts";
+import store from "@/store/store.ts";
 
 import Root from "./pages/Root";
 import Error from "./pages/Error";
@@ -41,8 +40,14 @@ const router = createBrowserRouter([
                         index: true,
                         element: <Dashboard />,
                         // loader: async () => {
+                        //     const state = store.getState();
+                        //     const user = state.authData.user;
+                        //     if (user) {
+                        //         console.log("Пользователь уже загружен:", user);
+                        //         return user;
+                        //     }
                         //     try {
-                        //         await store.dispatch(fetchUser()).unwrap()
+                        //         return await store.dispatch(fetchUser()).unwrap();
                         //     } catch (error) {
                         //         console.error("Ошибка загрузки данных пользователя:", error);
                         //         throw error;
