@@ -12,10 +12,13 @@ import ProductUpdate from "./pages/products/ProductUpdate.tsx";
 import ProductCreate from "@/pages/products/ProductCreate.tsx";
 import Orders from "./pages/orders/Orders.tsx";
 import OrderUpdate from "@/pages/orders/OrderUpdate.tsx";
+import Payments from "@/pages/payments/Payments.tsx";
+import PaymentUpdate from "@/pages/payments/PaymentUpdate.tsx";
 import Notifications from "@/pages/Notifications.tsx";
 import Settings from "./pages/Settings";
 import ProtectedRoute from "@/pages/authorization/ProtectedRoute.tsx";
 import PublicRoute from "@/pages/authorization/PublicRoute.tsx";
+import Shop from "./pages/shop/shop.tsx";
 
 
 const router = createBrowserRouter([
@@ -24,10 +27,7 @@ const router = createBrowserRouter([
         element: <Root />,
         errorElement: <Error message={'Несуществующая страничка'} />,
         children: [
-            { index: true, element: <Shop/> },
-            { path: 'products',  element: <ProductsPageAnalyze/>},
-            { path: 'products/:id',  element: <ProductPage/>},
-            { path: '' },
+            {index: true, element: <Shop/>},
             {
                 element: <PublicRoute />, // Защищает страницы от авторизованных пользователей
                 children: [
@@ -36,10 +36,10 @@ const router = createBrowserRouter([
                 ],
             },
             {
-                element: <ProtectedRoute />, // Защищает страницы от авторизованных пользователей
+                element: <ProtectedRoute />,
                 children: [
                     {
-                        path: "profile/dashboard",
+                        path:"profile/dashboard",
                         element: <Dashboard />,
                         // loader: async () => {
                         //     const state = store.getState();
@@ -61,6 +61,8 @@ const router = createBrowserRouter([
                     { path: "profile/products/:id", element: <ProductUpdate /> },
                     { path: "profile/orders", element: <Orders /> },
                     { path: "profile/orders/:id", element: <OrderUpdate /> },
+                    { path: "profile/payments", element: <Payments /> },
+                    { path: "profile/payments/:id", element: <PaymentUpdate /> },
                     { path: "profile/notifications", element: <Notifications /> },
                     { path: "profile/settings", element: <Settings /> },
                 ],
