@@ -4,7 +4,7 @@ import {useAuth} from "@/hooks/use-auth.tsx"; // Импорт корневого
 
 const ProtectedRoute = () => {
     const { isAuthenticated } = useAuth()
-    return !isAuthenticated ? (
+    return isAuthenticated ? (
         <>
             <div className='fixed inset-y-0 left-0 w-64 max-lg:hidden'>
                 <Sidebar />
