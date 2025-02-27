@@ -2,6 +2,8 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthUserReduxState} from "../types/user.ts"
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import fetchData from "../lib/fetch.ts";
+import { sha256 } from 'js-sha256';
+
 interface State {
     loading: boolean;
     user: AuthUserReduxState | null;
@@ -14,26 +16,43 @@ const initialState: State = {
     error: null,
 }
 
+async function getHashSha256(toHash: string): Promise<string> {
+    return sha256(toHash);
+}
+
 export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:string}, {login:string,password:string}>(
     'auth/loginUser',
     async (loginData) => {
         try {
-
-            console.log("fetchLoginUser");
-            localStorage.setItem("loginDAta","logPog");
-
+            loginData.password = await getHashSha256(loginData.password);
             const query = `${import.meta.env.VITE_API_URL}/login`;
             return await fetchData<{user:AuthUserReduxState,token:string}>(query, {
                 method: 'POST',
-                body: JSON.stringify({
-                    login: loginData,
-                }),
+                body: JSON.stringify({loginData})
             });
         } catch (error) {
             throw new Error((error as Error).message);
         }
     }
 )
+
+export const fetchRegisterUser = createAsyncThunk<void, {login:string,password:string}>(
+    'auth/registerUser',
+    async (registerData) => {
+        try {
+            registerData.password = await getHashSha256(registerData.password);
+            const query = `${import.meta.env.VITE_API_URL}/register`;
+            return await fetchData<void>(query, {
+                method: 'POST',
+                body: JSON.stringify({registerData})
+            });
+        } catch (error) {
+            throw new Error((error as Error).message);
+        }
+    }
+)
+
+
 const authSlice = createSlice({
     name: 'auth',
     initialState,
@@ -61,6 +80,18 @@ const authSlice = createSlice({
             state.loading = false;
             console.log(action.error.message);
             state.error = action.error.message || 'Ошибка логина';
+        })
+        .addCase(fetchRegisterUser.pending,(state)=> {
+            state.loading=true;
+            state.error=null;
+        })
+        .addCase(fetchRegisterUser.fulfilled, (state)=> {
+            state.loading=false;
+            state.error = null;
+        })
+        .addCase(fetchRegisterUser.rejected,(state,action)=> {
+            state.loading = false;
+            state.error = action.error.message || 'Ошибка регистрации';
         })
 
     }

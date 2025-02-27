@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Label } from "@/components/ui/label.tsx"
 import {NavLink, useNavigate} from "react-router-dom";
+import { fetchRegisterUser } from "@/store/authSlice";
 
 export function RegisterForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
     const [formState, setFormState] = useState({login: '', password: '', repeatPassword: ''})
@@ -17,8 +18,8 @@ export function RegisterForm({ className, ...props}: React.ComponentPropsWithout
             const {repeatPassword, ...fState} = formState
             if(repeatPassword === fState.password) {
                 console.log(repeatPassword, fState)
-                //await store.dispatch(fetchRegister(fState)).unwrap()
-                //navigate("/login")
+                await store.dispatch(fetchRegisterUser(fState)).unwrap()
+                navigate("/login")
             } else {
                 alert ("Passwords does not match")
             }
