@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import productReducer from "./productsSlice.ts"
 import orderReducer from "./ordersSlice.ts"
-import paymentReducer from "./paymentsSlice.ts"
 import authReducer from "./authSlice.ts"
 
 const store = configureStore({
@@ -9,7 +8,6 @@ const store = configureStore({
         authData: authReducer,
         productsData: productReducer,
         ordersData: orderReducer,
-        paymentsData: paymentReducer
     }
 })
 

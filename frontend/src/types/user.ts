@@ -1,4 +1,6 @@
-import {Payment} from "@/types/payment.ts";
+export interface AuthUserReduxState {
+    id: number;
+}
 
 export interface UserForm {
     name: string;
@@ -6,9 +8,4 @@ export interface UserForm {
     email: string;
     address: string;
     zipCode: string;
-    payment: Payment
-}
-
-export interface User extends UserForm {
-    id: number;
 }

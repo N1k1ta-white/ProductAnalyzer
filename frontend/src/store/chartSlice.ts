@@ -1,17 +1,17 @@
-import {chartData} from "@types/chart";
+import {ChartDataReduxStore} from "@/types/chart.ts";
 
-interface State{
+interface State {
     loading: boolean;
-    data: chartData;
+    data: ChartDataReduxStore[];
     error: string | null;
 }
 
-// const initialState: State = {
+const initialState: State = {
+    loading: false,
+    data: [] as ChartDataReduxStore[],
+    error: null,
+}
 
-//     loading: false,
-//     data: [],
-//     error: null,
-// }
 
 
 

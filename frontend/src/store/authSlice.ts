@@ -1,9 +1,9 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {User} from "../types/user.ts"
+import {AuthUserReduxState} from "../types/user.ts"
 
 interface State {
     loading: boolean;
-    user: User | null;
+    user: AuthUserReduxState | null;
     error: string | null;
 }
 
@@ -20,7 +20,7 @@ const authSlice = createSlice({
         updateError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
-        updateUser: (state, action: PayloadAction<User | null>) => {
+        updateUser: (state, action: PayloadAction<AuthUserReduxState | null>) => {
             state.user = action.payload
         }
     }

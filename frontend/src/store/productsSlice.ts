@@ -1,15 +1,15 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Product} from "../types/product";
+import {ProductReduxState} from "../types/product";
 
 interface State {
     loading: boolean;
-    products: Product[];
+    products: ProductReduxState[];
     error: string | null;
 }
 
 const initialState: State = {
     loading: false,
-    products: [] as Product[],
+    products: [] as ProductReduxState[],
     error: null,
 }
 
@@ -20,7 +20,7 @@ const productsSlice = createSlice({
         updateError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
-        updateProducts: (state, action: PayloadAction<Product[]>) => {
+        updateProducts: (state, action: PayloadAction<ProductReduxState[]>) => {
             state.products = action.payload
         }
     }

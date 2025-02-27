@@ -1,15 +1,15 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {Order} from "@/types/order.ts";
+import {OrderReduxState} from "@/types/order.ts";
 
 interface State {
     loading: boolean;
-    orders: Order[];
+    orders: OrderReduxState[];
     error: string | null;
 }
 
 const initialState: State = {
     loading: false,
-    orders: [] as Order[],
+    orders: [] as OrderReduxState[],
     error: null,
 }
 
@@ -20,7 +20,7 @@ const ordersSlice = createSlice({
         updateError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
-        updatePayments: (state, action: PayloadAction<Order[]>) => {
+        updatePayments: (state, action: PayloadAction<OrderReduxState[]>) => {
             state.orders = action.payload
         }
     }
