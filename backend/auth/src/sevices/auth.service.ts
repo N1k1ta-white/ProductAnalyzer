@@ -22,4 +22,9 @@ export class AuthService {
         const token = this.jwtService.sign({login: user.login, sub : user.id})
         return {user, token}
     }
+
+    async profileUser(jwt : string) {
+        const id = this.jwtService.verify(jwt).id
+        return this.userService.getById(id)
+    }
 }

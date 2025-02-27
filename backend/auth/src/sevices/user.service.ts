@@ -40,4 +40,13 @@ export class UserService {
 
         return user;
     }
+
+    async getById(id : number) : Promise<User> {
+        const user = await this.userRepository.findOne({ where: { id } })
+        if (!user) {
+            throw new RpcException('User not found or token is invalid')
+        }
+
+        return user;
+    }
 }

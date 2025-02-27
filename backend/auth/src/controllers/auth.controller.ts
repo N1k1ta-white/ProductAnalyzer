@@ -5,6 +5,7 @@ import { AuthService } from 'src/sevices/auth.service';
 
 const REGISTER_USER = "register"
 const AUTH_USER = "auth"
+const PROFILE_USER = "profile"
 
 @Controller('auth')
 export class AuthController {
@@ -21,6 +22,11 @@ export class AuthController {
     @MessagePattern(AUTH_USER)
     async authUser(@Payload() userDto : UserDto) {
         return this.authService.authUser(userDto)
+    }
+
+    @MessagePattern(PROFILE_USER)
+    async profileUser(@Payload() jwtToken : string) {
+        return this.authService.profileUser(jwtToken)
     }
 
 }
