@@ -1,7 +1,7 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {AuthUserReduxState} from "../types/user.ts"
 import { createAsyncThunk } from '@reduxjs/toolkit'
-
+import fetchData from "../lib/fetch.ts";
 interface State {
     loading: boolean;
     user: AuthUserReduxState | null;
@@ -18,22 +18,17 @@ export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:st
     'auth/loginUser',
     async (loginData) => {
         try {
-            const formData = new FormData();
-            formData.append('login', loginData.login);
-            formData.append('password', loginData.password);
+
             console.log("fetchLoginUser");
             localStorage.setItem("loginDAta","logPog");
+
             const query = `${import.meta.env.VITE_API_URL}/login`;
-            const response = await fetch(query, {
+            return await fetchData<{user:AuthUserReduxState,token:string}>(query, {
                 method: 'POST',
-                body: formData, // НЕ указываем `Content-Type`, браузер сам его поставит!
-                credentials: "include"
+                body: JSON.stringify({
+                    login: loginData,
+                }),
             });
-            if (!response.ok) {
-                const errorResponse = await response.json().catch(() => null);
-                throw new Error(errorResponse?.message || 'Неизвестная ошибка');
-            }
-            return await response.json();
         } catch (error) {
             throw new Error((error as Error).message);
         }
