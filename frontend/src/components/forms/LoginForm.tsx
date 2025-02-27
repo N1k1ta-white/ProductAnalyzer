@@ -7,16 +7,17 @@ import { Button } from "@/components/ui/button.tsx"
 import { Input } from "@/components/ui/input.tsx"
 import { Label } from "@/components/ui/label.tsx"
 import {NavLink, useNavigate} from "react-router-dom";
+import { fetchLoginUser } from "@/store/authSlice";
 
 export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
-    const [formState, setFormState] = useState({login: '', password: ''})
+    const [formState, setFormState] = useState({login: "", password: ""})
     const navigate = useNavigate()
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
             console.log(formState.login, formState.password)
-            //await store.dispatch(fetchLogin(formState)).unwrap()
-            //navigate("/")
+            await store.dispatch(fetchLoginUser(formState)).unwrap()
+            navigate("/")
         } catch (error) {
             alert("Error while login: " + (error as Error).message);
         }

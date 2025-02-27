@@ -1,4 +1,4 @@
-export interface AuthUserReduxState {
+export interface AuthUserReduxState extends UserForm {
     id: number;
 }
 
