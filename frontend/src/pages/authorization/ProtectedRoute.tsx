@@ -1,6 +1,7 @@
 import { Navigate, Outlet } from "react-router-dom";
 import {Sidebar} from "@/components/Sidebar.tsx";
 import {useAuth} from "@/hooks/use-auth.tsx"; // Импорт корневого состояния
+import ProfileNavigation from "@/components/ProfileNavigation";
 
 const ProtectedRoute = () => {
     const { isAuthenticated } = useAuth()
@@ -50,6 +51,9 @@ const ProtectedRoute = () => {
             </header>
             <main className='flex flex-1 flex-col pb-2.5 lg:min-w-0 lg:pl-64 lg:pr-2 lg:pt-2.5'>
                 <div className='p-6 grow lg:rounded-lg lg:bg-white lg:shadow-sm lg:ring-1 lg:ring-zinc-950/5 dark:lg:bg-zinc-900 dark:lg:ring-white/10'>
+                    <div className="flex justify-end">
+                        <ProfileNavigation />
+                    </div>
                     <Outlet />
                 </div>
             </main>

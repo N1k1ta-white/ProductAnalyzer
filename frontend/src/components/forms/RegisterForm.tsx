@@ -1,6 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react"
 import React, {useState} from "react";
-import store from "@/store/store.ts";
+import store, { RootState } from "@/store/store.ts";
 
 import { cn } from "@/lib/utils.ts"
 import { Button } from "@/components/ui/button.tsx"
@@ -8,16 +8,17 @@ import { Input } from "@/components/ui/input.tsx"
 import { Label } from "@/components/ui/label.tsx"
 import {NavLink, useNavigate} from "react-router-dom";
 import { fetchRegisterUser } from "@/store/authSlice";
+import { useSelector } from "react-redux";
 
 export function RegisterForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
     const [formState, setFormState] = useState({login: '', password: '', repeatPassword: ''})
     const navigate = useNavigate()
+    const {loading} = useSelector((state:RootState) => state.authData)
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
             const {repeatPassword, ...fState} = formState
             if(repeatPassword === fState.password) {
-                console.log(repeatPassword, fState)
                 await store.dispatch(fetchRegisterUser(fState)).unwrap()
                 navigate("/login")
             } else {
@@ -27,6 +28,7 @@ export function RegisterForm({ className, ...props}: React.ComponentPropsWithout
             alert("Error while register: " + (error as Error).message);
         }
     }
+    if(loading) {return (<>Loading ...</>)}
     return (
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <form onSubmit={handleLogin}>
