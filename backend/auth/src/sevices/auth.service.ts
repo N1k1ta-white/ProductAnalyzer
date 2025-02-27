@@ -24,7 +24,7 @@ export class AuthService {
     }
 
     async profileUser(jwt : string) {
-        const id = this.jwtService.verify(jwt).id
+        const id = this.jwtService.verify(jwt).sub
         return this.userService.getById(id)
     }
 }
