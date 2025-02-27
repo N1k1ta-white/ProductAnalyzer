@@ -1,5 +1,6 @@
 export interface AuthUserReduxState extends UserForm {
     id: number;
+
 }
 
 export interface UserForm {

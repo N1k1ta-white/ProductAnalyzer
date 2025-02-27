@@ -8,16 +8,15 @@ import {updateUser} from "@/store/authSlice.ts";
 export function Sidebar() {
     const navigate = useNavigate()
     const links = [
-        { path: "/", label: "Dashboard", icon: <Home className="size-5" /> }, // Обзор
-        { path: "/products", label: "Products", icon: <Boxes className="size-5" /> }, // Товары
-        { path: "/orders", label: "Orders", icon: <ClipboardList className="size-5" /> }, // Заказы (список)
-        { path: "/payments", label: "Payments", icon: <CreditCard className="size-5" /> },
-        { path: "/notifications", label: "Notifications", icon: <Bell className="size-5" /> },
-        { path: "/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
+        { path: "profile/dashboard", label: "Dashboard", icon: <Home className="size-5" /> }, // Обзор
+        { path: "profile/products", label: "Products", icon: <Boxes className="size-5" /> }, // Товары
+        { path: "profile/orders", label: "Orders", icon: <ClipboardList className="size-5" /> }, // Заказы (список)`
+        { path: "profile/notifications", label: "Notifications", icon: <Bell className="size-5" /> },
+        { path: "profile/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
     ];
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem(import.meta.env.VITE_JWT_KEY_TO_LOCAL_STORAGE??"");
         store.dispatch(updateUser(null))
         navigate("/login")
     }

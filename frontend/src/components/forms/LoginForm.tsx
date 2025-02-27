@@ -14,8 +14,8 @@ export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef
     const navigate = useNavigate()
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
+            console.log("HUI")
             event.preventDefault();
-            console.log(formState.login, formState.password)
             await store.dispatch(fetchLoginUser(formState)).unwrap()
             navigate("/")
         } catch (error) {
@@ -44,7 +44,7 @@ export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef
                     </div>
                     <div className="flex flex-col gap-6">
                         <div className="grid gap-2">
-                            <Label htmlFor="email">Login</Label>
+                            <Label htmlFor="email">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
