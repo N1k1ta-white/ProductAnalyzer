@@ -4,6 +4,8 @@ import { UserDto } from 'src/dto/user.dto';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
+import { RpcException } from '@nestjs/microservices';
+import { error } from 'console';
 
 @Injectable()
 export class UserService {
@@ -15,7 +17,9 @@ export class UserService {
     async registerUser(userDto : UserDto) : Promise<User> {
         const exisingUser = await this.userRepository.findOne({where : {login: userDto.login}})
         if (exisingUser) {
-            throw new BadRequestException("User already exists")
+            throw new RpcException({
+                message: "User already exists",
+            })
         }
 
         const encrypedPassword = await bcrypt.hash(userDto.password, 10)
@@ -26,12 +30,12 @@ export class UserService {
     async authUser(userDto : UserDto) : Promise<User> {
         const user = await this.userRepository.findOne({ where: { login: userDto.login} })
         if (!user) {
-            throw new UnauthorizedException('User not found')
+            throw new RpcException('User not found')
         }
 
         const isPasswordValid = await bcrypt.compare(userDto.password, user.password);
         if (!isPasswordValid) {
-            throw new UnauthorizedException('Invalid password');
+            throw new RpcException('Invalid password');
         }
 
         return user;

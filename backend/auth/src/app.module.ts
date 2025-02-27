@@ -17,7 +17,7 @@ import { DatabaseModule } from './database.module';
       signOptions: { expiresIn: process.env.JWT_EXPIRES_IN },
     }),
   ],
-  providers:[AuthService, UserService, JwtService],
+  providers:[AuthService, UserService],
   controllers: [AuthController]
 })
 export class AppModule {}
