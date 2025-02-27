@@ -87,7 +87,7 @@ const authSlice = createSlice({
             state.loading = false;
             state.error = null;
             state.user = action.payload.user;
-            localStorage.setItem(process.env.VITE_JWT_KEY_TO_LOCAL_STORAGE??"",action.payload.token);//Надо бы название поля гдето сохранить
+            localStorage.setItem(import.meta.env.VITE_JWT_KEY_TO_LOCAL_STORAGE??"",action.payload.token);//Надо бы название поля гдето сохранить
         })
         .addCase(fetchLoginUser.rejected,(state,action)=> {
             state.loading = false;

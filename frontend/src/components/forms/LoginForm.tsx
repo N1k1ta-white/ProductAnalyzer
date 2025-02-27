@@ -15,7 +15,6 @@ export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
-            console.log(formState.login, formState.password)
             await store.dispatch(fetchLoginUser(formState)).unwrap()
             navigate("/")
         } catch (error) {
