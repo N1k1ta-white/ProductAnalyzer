@@ -1,5 +1,5 @@
 'use server';
-async function fetchData<T>(url: string, options?: RequestInit): Promise<T> {
+async function fetchData<T>(url: string, options?: RequestInit): Promise<T> {// T - то шо получаем
     const response = await fetch(url, {
         ...options,
         headers: {

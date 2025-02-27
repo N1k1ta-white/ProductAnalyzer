@@ -17,7 +17,7 @@ export function Sidebar() {
     ];
 
     const handleLogout = () => {
-        localStorage.removeItem("token");
+        localStorage.removeItem(process.env.VITE_JWT_KEY_TO_LOCAL_STORAGE??"");
         store.dispatch(updateUser(null))
         navigate("/login")
     }

@@ -23,6 +23,7 @@ import Shop from "@/pages/shop/Shop.tsx";
 
 const router = createBrowserRouter([
     {
+
         path: "/",
         element: <Root />,
         errorElement: <Error message={'Несуществующая страничка'} />,
@@ -72,7 +73,10 @@ const router = createBrowserRouter([
 ]);
 
 
+
+
 function App() {
+    console.log("Page loaded");
     return (
        <RouterProvider router={router} />
     );
