@@ -1,15 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
     imports: [
+        ConfigModule.forRoot(),
         ClientsModule.register([
             {
                 name: 'AUTH_SERVICE',
                 transport: Transport.RMQ,
                 options: {
-                    urls: [process.env.RMQ_URL ?? 'amqp://localhost:5672'],
-                    queue: "auth_queue",
+                    urls: [process.env.RABBITMQ_URL ?? 'amqp://localhost:5672'],
+                    queue: 'auth_queue', 
                     queueOptions: { durable: false }
                 }
             },
