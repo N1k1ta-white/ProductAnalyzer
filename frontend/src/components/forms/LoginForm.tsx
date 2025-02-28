@@ -10,11 +10,10 @@ import {NavLink, useNavigate} from "react-router-dom";
 import { fetchLoginUser } from "@/store/authSlice";
 
 export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
-    const [formState, setFormState] = useState({login: "", password: ""})
+    const [formState, setFormState] = useState({email: "", password: ""})
     const navigate = useNavigate()
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
-            console.log("HUI")
             event.preventDefault();
             await store.dispatch(fetchLoginUser(formState)).unwrap()
             navigate("/")
@@ -48,8 +47,8 @@ export function LoginForm({ className, ...props}: React.ComponentPropsWithoutRef
                             <Input
                                 id="email"
                                 type="email"
-                                value={formState.login}
-                                onChange={e => setFormState({...formState, login: e.currentTarget.value})}
+                                value={formState.email}
+                                onChange={e => setFormState({...formState, email: e.currentTarget.value})}
                                 placeholder="m@example.com"
                                 required
                             />
