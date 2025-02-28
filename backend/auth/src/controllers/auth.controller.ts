@@ -1,9 +1,7 @@
-import { Controller, HttpStatus, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
-import { BaseRpcExceptionFilter, MessagePattern, Payload, RpcException } from '@nestjs/microservices';
-import { kMaxLength } from 'buffer';
+import { Controller } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { UserDto } from 'src/dto/user.dto';
 import { AuthService } from 'src/sevices/auth.service';
-import { TransformInterceptor } from 'src/util/transform.interceptor';
 
 const REGISTER_USER = "register"
 const AUTH_USER = "auth"
