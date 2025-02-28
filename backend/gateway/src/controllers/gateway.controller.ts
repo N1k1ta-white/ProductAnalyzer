@@ -14,35 +14,20 @@ export class GatewayController {
         @Inject('AUTH_SERVICE') private readonly authClient: ClientProxy,
     ) {}
 
-    // TODO: Implement handling exceptions 
-
     @Public()
     @Post("register")
     async register(@Body() payload: any) {
-        try {
-            const res = await firstValueFrom(this.authClient.send(REGISTER_USER, payload))
-            return res
-        } catch (error) {
-            throw new BadRequestException(error.message)
-        }
+        return firstValueFrom(this.authClient.send(REGISTER_USER, payload))
     }
 
     @Public()
     @Post("login")
     async login(@Body() payload: any) {
-        try {
-            return this.authClient.send(AUTH_USER, payload)
-        } catch (error) {
-            throw new UnauthorizedException(error.message)
-        }
+        return this.authClient.send(AUTH_USER, payload)
     }
 
     @Get("profile")
     async profile(@Headers('authorization') jwtToken: string) {
-        try {
-            return this.authClient.send(PROFILE_USER, jwtToken.replace('bearer ', ''))
-        } catch (error) {
-            throw new UnauthorizedException(error.message)
-        }
+        return this.authClient.send(PROFILE_USER, jwtToken.replace('bearer ', ''))
     }
 }
