@@ -94,7 +94,7 @@ export function AddProductModal() {
                                 <Input
                                     id="quantity"
                                     type="number"
-                                    value={product.price}
+                                    value={product.quantity}
                                     onChange={(e) => setProduct({ ...product, quantity: Number(e.currentTarget.value) })}
                                     placeholder="Amount"
                                 />
@@ -105,7 +105,7 @@ export function AddProductModal() {
                                 <Input
                                     id="categoryId"
                                     type="number"
-                                    value={product.price}
+                                    value={product.categoryId}
                                     onChange={(e) => setProduct({ ...product, categoryId: Number(e.currentTarget.value) })}
                                     placeholder="Category"
                                     required
