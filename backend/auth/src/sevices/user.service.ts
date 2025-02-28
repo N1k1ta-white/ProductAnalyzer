@@ -5,7 +5,6 @@ import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 import { RpcException } from '@nestjs/microservices';
-import { error } from 'console';
 
 @Injectable()
 export class UserService {
@@ -15,7 +14,7 @@ export class UserService {
     ) {}
 
     async registerUser(userDto : UserDto) : Promise<User> {
-        const exisingUser = await this.userRepository.findOne({where : {login: userDto.login}})
+        const exisingUser = await this.userRepository.findOne({where : {email: userDto.email}})
         if (exisingUser) {
             throw new RpcException({
                 message: "User already exists",
@@ -28,7 +27,7 @@ export class UserService {
     }
 
     async authUser(userDto : UserDto) : Promise<User> {
-        const user = await this.userRepository.findOne({ where: { login: userDto.login} })
+        const user = await this.userRepository.findOne({ where: { email: userDto.email} })
         if (!user) {
             throw new RpcException('User not found')
         }

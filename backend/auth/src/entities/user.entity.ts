@@ -6,16 +6,13 @@ export class User {
     id: number;
 
     @Column({unique: true})
-    login: string;
+    email: string;
 
     @Column()
     password: string;
 
     @Column({nullable: true})
     phone: string;
-
-    @Column({unique: true, nullable: true})
-    email: string;
 
     @Column({nullable: true})
     address: string;

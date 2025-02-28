@@ -1,3 +1,4 @@
+import { Exclude } from "class-transformer";
 import { IsDate, IsDateString, IsEmail, IsHash, IsInt, IsNotEmpty, IsNumber, IsOptional, IsPhoneNumber, isPhoneNumber, IsString, Matches, Max, Min } from "class-validator";
 
 export class UserDto {
@@ -6,9 +7,9 @@ export class UserDto {
     @IsNotEmpty()
     id: number;
 
-    @IsString()
+    @IsEmail()
     @IsNotEmpty()
-    login: string;
+    email: string;
 
     @IsPhoneNumber()
     @IsNotEmpty()
@@ -19,11 +20,6 @@ export class UserDto {
     @IsNotEmpty()
     @IsHash("sha256")
     password: string;
-
-    @IsEmail()
-    @IsNotEmpty()
-    @IsOptional()
-    email: string;
 
     @IsString()
     @IsNotEmpty()
