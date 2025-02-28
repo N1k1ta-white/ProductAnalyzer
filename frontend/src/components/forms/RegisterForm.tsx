@@ -1,5 +1,5 @@
 import { GalleryVerticalEnd } from "lucide-react"
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import store, { RootState } from "@/store/store.ts";
 
 import { cn } from "@/lib/utils.ts"
@@ -9,11 +9,17 @@ import { Label } from "@/components/ui/label.tsx"
 import {NavLink, useNavigate} from "react-router-dom";
 import { fetchRegisterUser } from "@/store/authSlice";
 import { useSelector } from "react-redux";
+import ModalError from "../modals/ModalError";
+import ModalInfo from "../modals/ModalInfo";
 
 export function RegisterForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
     const [formState, setFormState] = useState({email: '', password: '', repeatPassword: ''})
     const navigate = useNavigate()
     const {loading} = useSelector((state:RootState) => state.authData)
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [error,setErrorState] = useState("");
+
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         try {
             event.preventDefault();
@@ -25,11 +31,37 @@ export function RegisterForm({ className, ...props}: React.ComponentPropsWithout
                 alert ("Passwords does not match")
             }
         } catch (error) {
-            alert("Error while register: " + (error as Error).message);
+            setIsModalOpen(true)
+            setErrorState((error as Error).message);
         }
     }
-    if(loading) {return (<>Loading ...</>)}
+
+
     return (
+
+        <div className={cn("flex flex-col gap-6", className)} {...props}>
+
+            {loading && <div>Loading...</div>}
+
+            {(error === "User already exists") && (
+                <ModalInfo
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    title="This email is already registered"
+                    message={error}
+                />
+            )}
+
+
+            {(error === "Internal server error") && (
+                <ModalError
+                    isOpen={isModalOpen}
+                    onClose={() => setIsModalOpen(false)}
+                    title="Try Again"
+                    message={error}
+                />
+            )}
+
         <div className={cn("flex flex-col gap-6", className)} {...props}>
             <form onSubmit={handleLogin}>
                 <div className="flex flex-col gap-6">
@@ -93,6 +125,7 @@ export function RegisterForm({ className, ...props}: React.ComponentPropsWithout
                 By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
                 and <a href="#">Privacy Policy</a>.
             </div>
+        </div>
         </div>
     )
 }
