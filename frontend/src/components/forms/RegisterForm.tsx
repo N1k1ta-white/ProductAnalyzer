@@ -1,5 +1,5 @@
 import { GalleryVerticalEnd } from "lucide-react"
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 import store, { RootState } from "@/store/store.ts";
 
 import { cn } from "@/lib/utils.ts"

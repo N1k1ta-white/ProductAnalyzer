@@ -1,13 +1,13 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import React, { useState, useEffect } from "react";
-import store, { RootState } from "@/store/store.ts";
+import store from "@/store/store.ts";
 import { cn } from "@/lib/utils.ts";
 import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { NavLink, useNavigate } from "react-router-dom";
 import { fetchLoginUser } from "@/store/authSlice";
-import { useSelector } from "react-redux";
+
 import ModalError from "../modals/ModalError";
 import {Toaster } from "sonner"
 import ModalInfo from "../modals/ModalInfo";
@@ -19,7 +19,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
-    const {loading} = useSelector((state: RootState) => state.authData);
+    //const {loading} = useSelector((state: RootState) => state.authData);
 
     const [error,setErrorState] = useState("");
 
@@ -29,8 +29,8 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
             await store.dispatch(fetchLoginUser(formState)).unwrap();
             navigate("/");
         } catch (error) {
-           setIsModalOpen(true)
-           setErrorState((error as Error).message);
+            setIsModalOpen(true)
+            setErrorState((error as Error).message);
         }
     };
 
@@ -63,7 +63,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                 <ModalError
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    title="Try Again"
+                    title="Somthing went wrong ..."
                     message={error}
                 />
             )}
