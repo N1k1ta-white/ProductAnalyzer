@@ -4,8 +4,7 @@ import { UserDto } from 'src/dto/user.dto';
 import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
-import { RpcException } from '@nestjs/microservices';
-import { rpcException } from 'src/exception';
+import { rpcException } from 'src/util/exception';
 
 @Injectable()
 export class UserService {

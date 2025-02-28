@@ -1,15 +1,11 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Transport } from '@nestjs/microservices';
-import { ValidationPipe } from '@nestjs/common';
-import { TransformInterceptor } from './transform.interceptor';
+import { RpcException, Transport } from '@nestjs/microservices';
+import { HttpStatus, ValidationPipe } from '@nestjs/common';
+import { TransformInterceptor } from './util/transform.interceptor';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app.useGlobalPipes(new ValidationPipe());
-  await app.listen(process.env.PORT ?? 3000);
-  
-  const microservice = app.connectMicroservice({
+  const microservice = await NestFactory.createMicroservice(AppModule, {
     transport: Transport.RMQ,
     options: {
       urls: [process.env.RABBITMQ_URL],
@@ -17,6 +13,13 @@ async function bootstrap() {
       queueOptions: { durable: false },
       }
     })
+
+    microservice.useGlobalPipes(new ValidationPipe({ exceptionFactory: (errors) => 
+      new RpcException(
+        {message: errors.pop()?.constraints?.matches || "mmm I don't know", statusCode: HttpStatus.BAD_REQUEST}
+      )}))
+
+    microservice.useGlobalInterceptors(new TransformInterceptor())
 
     await microservice.listen()
 }
