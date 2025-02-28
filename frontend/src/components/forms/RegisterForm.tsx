@@ -11,7 +11,7 @@ import { fetchRegisterUser } from "@/store/authSlice";
 import { useSelector } from "react-redux";
 
 export function RegisterForm({ className, ...props}: React.ComponentPropsWithoutRef<"div">) {
-    const [formState, setFormState] = useState({login: '', password: '', repeatPassword: ''})
+    const [formState, setFormState] = useState({email: '', password: '', repeatPassword: ''})
     const navigate = useNavigate()
     const {loading} = useSelector((state:RootState) => state.authData)
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -55,8 +55,8 @@ export function RegisterForm({ className, ...props}: React.ComponentPropsWithout
                             <Input
                                 id="email"
                                 type="email"
-                                value={formState.login}
-                                onChange={e => setFormState({...formState, login: e.currentTarget.value})}
+                                value={formState.email}
+                                onChange={e => setFormState({...formState, email: e.currentTarget.value})}
                                 placeholder="m@example.com"
                                 required
                             />

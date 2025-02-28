@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {AuthUserReduxState, UserForm} from "../types/user.ts"
+import {AuthUserReduxState} from "../types/user.ts"
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import fetchData from "../lib/fetch.ts";
 import { sha256 } from 'js-sha256';
@@ -21,15 +21,20 @@ async function getHashSha256(toHash: string): Promise<string> {
     return sha256(toHash);
 }
 
-export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:string}, {login:string,password:string}>(
+export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:string}, {email:string,password:string}>(
     'auth/loginUser',
     async (loginData) => {
         try {
             loginData.password = await getHashSha256(loginData.password);
+
             const query = `${import.meta.env.VITE_API_URL}/login`;
+
             return await fetchData<{user:AuthUserReduxState,token:string}>(query, {
                 method: 'POST',
-                body: JSON.stringify({loginData})
+                body: JSON.stringify({
+                    email: loginData.email,
+                    password: loginData.password,
+                  })
             });
         } catch (error) {
             throw new Error((error as Error).message);
@@ -37,7 +42,7 @@ export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:st
     }
 )
 
-export const fetchRegisterUser = createAsyncThunk<void, {login:string,password:string}>(
+export const fetchRegisterUser = createAsyncThunk<void, {email:string,password:string}>(
     'auth/registerUser',
     async (registerData) => {
         try {
@@ -45,7 +50,10 @@ export const fetchRegisterUser = createAsyncThunk<void, {login:string,password:s
             const query = `${import.meta.env.VITE_API_URL}/register`;
             return await fetchData<void>(query, {
                 method: 'POST',
-                body: JSON.stringify({registerData})
+                body: JSON.stringify({
+                    email: registerData.email,
+                    password: registerData.password,
+                  })
             });
         } catch (error) {
             throw new Error((error as Error).message);
