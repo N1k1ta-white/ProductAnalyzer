@@ -26,6 +26,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
     const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
+            console.log(`loging ${formState}`);
             await store.dispatch(fetchLoginUser(formState)).unwrap();
             navigate("/");
         } catch (error) {
@@ -63,7 +64,7 @@ export function LoginForm({ className, ...props }: React.ComponentPropsWithoutRe
                 <ModalError
                     isOpen={isModalOpen}
                     onClose={() => setIsModalOpen(false)}
-                    title="Somthing went wrong ..."
+                    title="Something went wrong ..."
                     message={error}
                 />
             )}
