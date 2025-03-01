@@ -69,7 +69,7 @@ export default function Shop() {
     handlefetchProducts(); // Fetch products when component mounts
   }, []);
   return (
-    <div className="p-4 w-full display-flex h-full">
+    <div className="p-4 w-full display-flex h-screen-full">
       {error === "Cannot GET /products" && (
         <ModalError
           isOpen={isModalOpen}
@@ -78,7 +78,7 @@ export default function Shop() {
           message={error}
         />
       )}
-      <div className="fixed bottom-4 right-4 z-auto">
+      <div className="fixed bottom-4 right-4 z-10">
         <AddProductModal />
       </div>
       <nav className="flex justify-between items-center p-4 border-b">
@@ -131,7 +131,7 @@ export default function Shop() {
         ))}
       </div>
 
-      <Pagination className="flex justify-center mt-6">
+      <Pagination className="flex justify-center mt-6 z-10]">
         <PaginationContent>
           <PaginationItem>
             {currentPage > 1 ? (
@@ -139,7 +139,7 @@ export default function Shop() {
                 onClick={() => setCurrentPage(currentPage - 1)}
               />
             ) : (
-              <span className="opacity-50 cursor-not-allowed px-3 py-2">
+              <span className="opacity-50 cursor-not-allowed px-3 py-2 z-0">
                 Previous
               </span>
             )}
@@ -159,8 +159,8 @@ export default function Shop() {
             {currentPage < totalPages ? (
               <PaginationNext onClick={() => setCurrentPage(currentPage + 1)} />
             ) : (
-              <div className="cursor-pointer">
-                <span className="opacity-50 px-3 py-2 z-auto">Next</span>
+              <div className="cursor-pointer z-0">
+                <span className="opacity-50 px-3 py-2 z-0">Next</span>
               </div>
             )}
           </PaginationItem>
