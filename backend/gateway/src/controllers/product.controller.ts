@@ -14,7 +14,7 @@ export class ProductController {
 
     @Post()
     async addProduct(@Request() req, @Body() payload : any) {
-        const id = req.user.id
-        return this.authClient.send(ADD_PRODUCT, {id: id, payload})
+        payload.ownerId =  req.user.id
+        return this.authClient.send(ADD_PRODUCT, payload)
     }
 }

@@ -5,7 +5,6 @@ import { AuthService } from './sevices/auth.service';
 import { UserService } from './sevices/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from './util/database.module';
-import { RpcValidationPipe } from './util/validation.pipe';
 
 @Module({
   imports:[ConfigModule.forRoot(),
