@@ -56,20 +56,24 @@ export function AddProductModal() {
   // Add Attribute to Product
   const handleAddAttribute = () => {
     const { attribute } = state;
-    if (attribute.name && attribute.value) {
-      const updatedProduct = {
-        ...product,
-        attributes: [...product.properties, attribute],
-      };
-      setProduct(updatedProduct);
 
-      // Clear attribute state
-      setState((prevState) => ({
-        ...prevState,
-        attribute: { name: "", value: "" },
-      }));
+    if (!attribute.name.trim() || !attribute.value.trim()) {
+      return; // Prevent adding empty attributes
     }
+    const updatedProduct = {
+      ...product,
+      properties: [...product.properties, attribute], // Fix property name
+    };
+
+    setProduct(updatedProduct);
+
+    // Reset attribute input fields
+    setState((prevState) => ({
+      ...prevState,
+      attribute: { name: "", value: "" },
+    }));
   };
+
 
   // Handle input change for attributes
   const handleAttributeInput = (
@@ -108,6 +112,7 @@ export function AddProductModal() {
     e.preventDefault();
     try {
       console.log("Product added:", product);
+      product.categoryName = 1;
       await store.dispatch(addProduct(product)).unwrap();
       setIsModalOpen(false);
     } catch (error) {
@@ -176,7 +181,7 @@ export function AddProductModal() {
                 <div className="w-full flex flex-col gap-2">
                   <Label htmlFor="categoryId">Category</Label>
                   <Select
-                    value={product.categoryName}
+                    value={product.categoryName as string}
                     onValueChange={(e) => setProduct({ ...product, categoryName: e })}
                   >
                     <SelectTrigger className="w-full">
