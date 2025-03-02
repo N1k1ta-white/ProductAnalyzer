@@ -1,20 +1,36 @@
-import { Body, Controller, Inject, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post, Request } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
+import { Public } from 'src/public.decorator';
 
 const ADD_PRODUCT = "addProduct"
-const SERVICE = "PRODUCT_SERVICE"
+const PRODUCT_SERVICE = "PRODUCT_SERVICE"
+const GET_PRODUCTS = "getPopularProducts"
+const ADD_VIEW = "addProductView"
 
 @Controller('product')
 export class ProductController {
 
     constructor(
-        @Inject(SERVICE) private readonly authClient: ClientProxy,
+        @Inject(PRODUCT_SERVICE) private readonly productClient: ClientProxy,
     ) {}
 
     @Post()
     async addProduct(@Request() req, @Body() payload : any) {
         payload.ownerId =  req.user.id
-        return this.authClient.send(ADD_PRODUCT, payload)
+        return this.productClient.send(ADD_PRODUCT, payload)
+    }
+
+    @Get()
+    @Public()
+    async getProducts() {
+        return this.productClient.send(GET_PRODUCTS, {})
+    }
+
+    @Public()
+    @Patch(":id/view")
+    @HttpCode(HttpStatus.OK)
+    async addView(@Param('id') id: number) {
+        this.productClient.emit(ADD_VIEW, {id})
     }
 }

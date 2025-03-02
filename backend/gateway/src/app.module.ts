@@ -7,14 +7,14 @@ import { JwtStrategy } from './jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtGuard } from './jwt.guard';
 import { ProductController } from './controllers/product.controller';
-import { JwtService } from '@nestjs/jwt';
+import { AttributeController } from './controllers/attribute.controller';
 
 @Module({
   imports: [RabbitMqModule,
     ConfigModule.forRoot(),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  controllers: [AuthController, ProductController],
+  controllers: [AuthController, ProductController, AttributeController],
   providers: [JwtStrategy, 
     {
       provide: APP_GUARD,
