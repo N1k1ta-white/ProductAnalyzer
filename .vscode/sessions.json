@@ -9,20 +9,30 @@
       {
         "name": "git",
         "icon": "logo-github",
-        "color": "terminal.ansiGreen",
-        "commands": []
+        "color": "terminal.ansiBrightWhite",
+        "autoExecuteCommands": true,
+        "commands": [
+          "git status --porcelain"
+        ]
       },
-      [
-        {
-          "name": "docker",
-          "icon": "package",
-          "color": "terminal.ansiBrightBlue",
-          "autoExecuteCommands": true,
-          "commands": [
-            "cd ./backend/db; docker-compose up -d"
-          ]
-        }
-      ],
+      {
+        "name": "docker",
+        "icon": "package",
+        "color": "terminal.ansiBrightBlue",
+        "autoExecuteCommands": true,
+        "commands": [
+          "cd ./backend/db; docker-compose up -d"
+        ]
+      },
+      {
+        "name": "frontend",
+        "icon": "preview",
+        "color": "terminal.ansiBrightYellow",
+        "autoExecuteCommands": true,
+        "commands": [
+          "cd ./frontend; npm run dev"
+        ]
+      },
       [
         {
           "name": "auth",

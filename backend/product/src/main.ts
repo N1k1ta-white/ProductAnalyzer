@@ -14,9 +14,10 @@ async function bootstrap() {
     })
 
     microservice.useGlobalPipes(new ValidationPipe({ exceptionFactory: (errors) => 
-      new RpcException({ message: errors.pop()?.constraints, 
-      statusCode: HttpStatus.BAD_REQUEST})}))
-    
+      new RpcException({ message: errors.map(error => 
+        Object.values(error.constraints || {})).flat().join(", "),
+        statusCode: HttpStatus.BAD_REQUEST})}))
+        
     await microservice.listen()
 }
 bootstrap();

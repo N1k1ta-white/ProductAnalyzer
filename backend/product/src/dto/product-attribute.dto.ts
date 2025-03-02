@@ -1,14 +1,15 @@
-import { IsNotEmpty, IsNotEmptyObject, IsNumber, IsString } from 'class-validator';
-import { AttributeDto } from './attribute.dto';
+import { IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 
-export class ProductAttributeDto {
+export class ProductPropertyDto {
 
     @IsNumber()
     @IsNotEmpty()
+    @IsOptional()
     id: number;
 
-    @IsNotEmptyObject()
-    attr: AttributeDto;
+    @IsNotEmpty()
+    @IsString()
+    name: string;
 
     @IsString()
     @IsNotEmpty()
