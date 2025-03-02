@@ -1,5 +1,4 @@
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
-import { Column } from "typeorm";
 
 export class AttributeDto {
 

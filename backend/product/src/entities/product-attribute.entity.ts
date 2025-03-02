@@ -3,19 +3,16 @@ import { Attribute } from './attribute.entity';
 import { Product } from './product.entity';
 
 @Entity()
-export class ProductAttribute {
+export class ProductProperty {
     @PrimaryGeneratedColumn()
     id: number;
 
     @Column()
-    name: string;
-
-    @Column()
     value: string;
 
-    @ManyToOne(() => Attribute, attribute => attribute.prodAttrs)
+    @ManyToOne(() => Attribute, attribute => attribute.prodAttrs, {eager: true})
     attr: Attribute;
 
-    @ManyToOne(() => Product, product => product.attributes)
+    @ManyToOne(() => Product, product => product.properties, {onDelete: "CASCADE"})
     product: Product;
 }

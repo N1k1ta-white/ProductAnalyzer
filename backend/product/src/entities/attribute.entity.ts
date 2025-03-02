@@ -1,4 +1,4 @@
-import { ProductAttribute } from "./product-attribute.entity";
+import { ProductProperty } from "./product-attribute.entity";
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
@@ -10,9 +10,9 @@ export class Attribute {
     @Column()
     name: string;
 
-    @Column()
+    @Column({default: 1})
     usage: number;
 
-    @OneToMany(() => ProductAttribute, prodAttr => prodAttr.attr)
-    prodAttrs: ProductAttribute[];
+    @OneToMany(() => ProductProperty, prodAttr => prodAttr.attr)
+    prodAttrs: ProductProperty[];
 }

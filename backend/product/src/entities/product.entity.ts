@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ProductAttribute } from './product-attribute.entity';
+import { ProductProperty } from './product-attribute.entity';
 
 @Entity()
 export class Product {
@@ -24,6 +24,6 @@ export class Product {
     @Column({nullable: true})
     description: string;
 
-    @OneToMany(() => ProductAttribute, productAttribute => productAttribute.product)
-    attributes: ProductAttribute[];
+    @OneToMany(() => ProductProperty, productAttribute => productAttribute.product, {cascade: true})
+    properties: ProductProperty[];
 }

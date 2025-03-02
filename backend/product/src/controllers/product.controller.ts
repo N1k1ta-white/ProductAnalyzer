@@ -1,4 +1,4 @@
-import { Controller, UsePipes, ValidationPipe } from '@nestjs/common';
+import { ConsoleLogger, Controller, UsePipes, ValidationPipe } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { ProductDto } from 'src/dto/product.dto';
 import { ProductService } from 'src/services/product.service';
@@ -13,9 +13,8 @@ export class ProductController {
     ) {}
 
     @MessagePattern(ADD_PRODUCT)
-    @UsePipes(new ValidationPipe({ transform: true }))
-    async addProduct(@Payload() data : { ownerId : number, productDto : ProductDto }) {
-        return this.productService.addProduct(data.ownerId, data.productDto)
+    async addProduct(@Payload() productDto : ProductDto) {
+        return this.productService.addProduct(productDto)
     }
 }
 8

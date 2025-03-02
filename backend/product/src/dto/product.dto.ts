@@ -1,6 +1,6 @@
-import { ProductAttributeDto } from './product-attribute.dto';
+import { ProductPropertyDto } from './product-attribute.dto';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
-import { Expose, Type } from 'class-transformer';
+import { Expose, Transform, Type } from 'class-transformer';
 
 export class ProductDto {
 
@@ -35,8 +35,8 @@ export class ProductDto {
     @IsNotEmpty()
     description: string;
 
-    @Expose()
-    @Type(() => ProductAttributeDto)
+    @IsNotEmpty()
     @IsArray()
-    attributes: ProductAttributeDto[];
+    @Type(() => ProductPropertyDto)
+    properties: ProductPropertyDto[];
 }
