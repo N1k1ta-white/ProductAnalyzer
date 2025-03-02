@@ -31,7 +31,7 @@ export const addProduct = createAsyncThunk<ProductReduxState, ProductReduxState>
                     categoryId: product.categoryName,
                     description: product.description,
                     price: product.price,
-                    attributes: product.attributes
+                    properties: product.properties
                   })
             });
         } catch (error) {
