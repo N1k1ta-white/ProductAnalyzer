@@ -1,4 +1,4 @@
-import { ProductPropertyDto } from './product-attribute.dto';
+import { ProductPropertyDto } from './product-property.dto';
 import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Expose, Transform, Type } from 'class-transformer';
 

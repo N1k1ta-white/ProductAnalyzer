@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { ProductProperty } from './product-attribute.entity';
+import { ProductProperty } from './product-property.entity';
 
 @Entity()
 export class Product {
@@ -23,6 +23,9 @@ export class Product {
 
     @Column({nullable: true})
     description: string;
+
+    @Column({default: 0})
+    views: number;
 
     @OneToMany(() => ProductProperty, productAttribute => productAttribute.product, {cascade: true})
     properties: ProductProperty[];

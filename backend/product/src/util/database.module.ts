@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { ProductProperty } from 'src/entities/product-attribute.entity';
+import { ProductProperty } from 'src/entities/product-property.entity';
 import { Product } from 'src/entities/product.entity';
 import { Attribute } from 'src/entities/attribute.entity';
 
