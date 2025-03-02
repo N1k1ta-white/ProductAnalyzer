@@ -5,7 +5,7 @@ export interface ProductReduxState {
     categoryName: string;
     price: number;
     description: string;
-    attributes: ProductAttribute[];
+    properties: ProductAttribute[];
 }
 
 export interface ProductAttribute {

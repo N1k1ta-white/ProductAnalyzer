@@ -41,7 +41,7 @@ export function AddProductModal() {
     categoryName: "",
     price: 0,
     description: "",
-    attributes: [],
+    properties: [],
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, setState] = useState({
@@ -59,7 +59,7 @@ export function AddProductModal() {
     if (attribute.name && attribute.value) {
       const updatedProduct = {
         ...product,
-        attributes: [...product.attributes, attribute],
+        attributes: [...product.properties, attribute],
       };
       setProduct(updatedProduct);
 
@@ -280,8 +280,8 @@ export function AddProductModal() {
                   </Button>
                 </div>
                 <ul className="mt-4 space-y-2 h-16">
-                  {product.attributes.length > 0 &&
-                    product.attributes.map((attr, index) => (
+                  {product.properties.length > 0 &&
+                    product.properties.map((attr, index) => (
                       <li key={index}>
                         {attr.name}: {attr.value}
                       </li>

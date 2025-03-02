@@ -33,6 +33,4 @@ export function damerauLevenshtein(a: string, b: string): number {
   return dp[m][n];
 }
 
-// Пример использования:
-console.log(damerauLevenshtein("ca", "abc")); // Выведет 2
-console.log(damerauLevenshtein("kitten", "sitting")); // Выведет 3
+
