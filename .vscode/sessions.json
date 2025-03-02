@@ -58,7 +58,16 @@
             "cd backend/gateway/; npm run start:dev"
           ]
         }
-      ]
+      ],
+      {
+        "name": "terminal",
+        "icon": "terminal-cmd",
+        "color": "terminal.ansiRed",
+        "autoExecuteCommands": true,
+        "commands": [
+          "echo 'Hi, I\\'m just simple termninal'"
+        ]
+      }
     ]
   }
 }
