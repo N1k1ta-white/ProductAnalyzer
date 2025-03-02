@@ -1,8 +1,8 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { AuthController } from './controllers/auth.controller';
-import { AuthService } from './sevices/auth.service';
-import { UserService } from './sevices/user.service';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
 import { JwtModule } from '@nestjs/jwt';
 import { DatabaseModule } from './util/database.module';
 
