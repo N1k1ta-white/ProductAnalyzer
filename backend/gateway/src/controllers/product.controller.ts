@@ -1,6 +1,7 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post, Request } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post, Query, Req, Request } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
+import { Paginate } from 'nestjs-paginate';
 import { Public } from 'src/public.decorator';
 
 const ADD_PRODUCT = "addProduct"
@@ -23,8 +24,10 @@ export class ProductController {
 
     @Get()
     @Public()
-    async getProducts() {
-        return this.productClient.send(GET_PRODUCTS, {})
+    async getProducts(@Paginate() query: any, @Req() req: Request) {
+        console.log(query)
+        
+        return this.productClient.send(GET_PRODUCTS, query)
     }
 
     @Public()
