@@ -31,12 +31,13 @@ import { ProductReduxState } from "@/types/product";
 import store from "@/store/store";
 import { fetchProducts } from "@/store/productsSlice";
 import ModalError from "@/components/modals/ModalError";
+import { SearchBlock } from "@/components/forms/SerchBlock";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function Shop() {
   const { isAuthenticated } = useAuth();
-  
+
   // Merged state
   const [state, setState] = useState({
     currentPage: 1,
@@ -83,6 +84,11 @@ export default function Shop() {
 
       <nav className="flex justify-between items-center p-4 border-b">
         <h1 className="text-xl font-bold">Shop</h1>
+        <div className="flex-1 flex justify-center">
+          <div className="w-full max-w-lg">
+            <SearchBlock />
+          </div>
+        </div>
         <NavigationMenu>
           <NavigationMenuList className="flex gap-4">
             {isAuthenticated ? (
@@ -97,7 +103,9 @@ export default function Shop() {
                   <NavigationMenuLink href="/login">Sign In</NavigationMenuLink>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                  <NavigationMenuLink href="/register">Register</NavigationMenuLink>
+                  <NavigationMenuLink href="/register">
+                    Register
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </>
             )}
@@ -107,7 +115,10 @@ export default function Shop() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 my-6">
         {state.products
-          .slice((state.currentPage - 1) * ITEMS_PER_PAGE, state.currentPage * ITEMS_PER_PAGE)
+          .slice(
+            (state.currentPage - 1) * ITEMS_PER_PAGE,
+            state.currentPage * ITEMS_PER_PAGE
+          )
           .map((card) => (
             <Card key={card.id}>
               <CardHeader className="flex justify-center w-full items-center">
@@ -125,7 +136,9 @@ export default function Shop() {
                 <CardDescription>{card.price}</CardDescription>
               </CardContent>
               <CardFooter>
-                <Button onClick={() => handleAddToCart(card.id)}>Add to Cart</Button>
+                <Button onClick={() => handleAddToCart(card.id)}>
+                  Add to Cart
+                </Button>
               </CardFooter>
             </Card>
           ))}
@@ -136,9 +149,15 @@ export default function Shop() {
         <PaginationContent>
           <PaginationItem>
             {state.currentPage > 1 ? (
-              <PaginationPrevious onClick={() => updateState({ currentPage: state.currentPage - 1 })} />
+              <PaginationPrevious
+                onClick={() =>
+                  updateState({ currentPage: state.currentPage - 1 })
+                }
+              />
             ) : (
-              <span className="opacity-50 cursor-not-allowed px-3 py-2 z-0">Previous</span>
+              <span className="opacity-50 cursor-not-allowed px-3 py-2 z-0">
+                Previous
+              </span>
             )}
           </PaginationItem>
 
@@ -156,7 +175,11 @@ export default function Shop() {
 
           <PaginationItem>
             {state.currentPage < totalPages ? (
-              <PaginationNext onClick={() => updateState({ currentPage: state.currentPage + 1 })} />
+              <PaginationNext
+                onClick={() =>
+                  updateState({ currentPage: state.currentPage + 1 })
+                }
+              />
             ) : (
               <div className="cursor-pointer z-0">
                 <span className="opacity-50 px-3 py-2 z-0">Next</span>
