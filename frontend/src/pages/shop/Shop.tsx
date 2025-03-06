@@ -93,13 +93,14 @@ export default function Shop() {
 
       <nav className="flex justify-between items-center p-4 border-b">
         <h1 className="text-xl font-bold">Shop</h1>
-        <NavigationMenu>
-          <NavigationMenuList className="flex gap-4">
-          <NavigationMenuItem className="">
-          <div className="flex ">
+        <div className="flex-1 flex justify-center">
+          <div className="w-full max-w-lg">
             <SearchBlock />
           </div>
-            </NavigationMenuItem>
+        </div>
+        <NavigationMenu>
+          <NavigationMenuList className="flex gap-4">
+            <NavigationMenuItem className=""></NavigationMenuItem>
             {isAuthenticated ? (
               <NavigationMenuItem>
                 <div className="flex gap-4">

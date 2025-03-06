@@ -30,19 +30,22 @@ export function SearchBlock() {
     return (
       <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-md">
         {/* Search Input */}
-        <Command className="relative w-full min-w-[250px]">
-          <CommandInput placeholder="Search..." className="border p-2 rounded-md w-full" />
-          <CommandList className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md">
-            <CommandEmpty>No results found</CommandEmpty>
-            <CommandGroup heading="Suggestions">
-              {suggestions.map((item, index) => (
-                <CommandItem key={index} className="cursor-pointer hover:bg-gray-200 p-2 rounded">
-                  {item}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
+        <Command className="w-full">
+        <CommandInput 
+          placeholder="Search..." 
+          className="w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+        />
+        <CommandList className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md z-50">
+          <CommandEmpty>No results found</CommandEmpty>
+          <CommandGroup heading="Suggestions" className="z-10">
+            {suggestions.map((item, index) => (
+              <CommandItem key={index} className="cursor-pointer hover:bg-gray-200 p-2 rounded">
+                {item}
+              </CommandItem>
+            ))}
+          </CommandGroup>
+        </CommandList>
+      </Command>
   
         {/* Filters Button */}
         <Button className="bg-gray-700 text-white px-4 py-2 rounded-md">Filters</Button>
