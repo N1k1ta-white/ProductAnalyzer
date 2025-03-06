@@ -3,9 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import ModalProps from "@/components/modals/ModalProps.tsx";
-import { ProductReduxState } from "@/types/product.ts"; // Adjust path if needed
-import { addProduct } from "@/store/productsSlice.ts";
-import store from "@/store/store.ts";
+import { ProductReduxState } from "@/types/product.ts"; 
 import ModalError from "../modals/ModalError.tsx";
 import { Textarea } from "@/components/ui/textarea.tsx";
 import {
@@ -34,7 +32,7 @@ const popularAttributes = [
   "Мощность",
 ];
 
-export function AddProductModal() {
+export function AddProductModal({ onProductAdd }: { onProductAdd: () => void }) {
   const [product, setProduct] = useState<ProductReduxState>({
     name: "",
     quantity: 1,
@@ -43,6 +41,7 @@ export function AddProductModal() {
     description: "",
     properties: [],
   });
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [state, setState] = useState({
     attribute: { name: "", value: "" },
@@ -113,7 +112,7 @@ export function AddProductModal() {
     try {
       console.log("Product added:", product);
       product.categoryName = 1;
-      await store.dispatch(addProduct(product)).unwrap();
+      onProductAdd();
       setIsModalOpen(false);
     } catch (error) {
       setState((prevState) => ({
