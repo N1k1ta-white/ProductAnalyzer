@@ -26,16 +26,16 @@ export function SearchBlock() {
       "Weather Watches",
       "FMI Shopper",
     ];
-  
+
     return (
       <div className="flex items-center gap-2 bg-white p-2 rounded-lg shadow-md">
         {/* Search Input */}
         <Command className="w-full">
-        <CommandInput 
-          placeholder="Search..." 
-          className="w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" 
+        <CommandInput
+          placeholder="Search..."
+          className="w-full border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-100"
         />
-        <CommandList className="absolute top-full left-0 w-full bg-white shadow-lg rounded-md z-50">
+        <CommandList className="relative top-full left-0 w-full bg-white shadow-lg rounded-md z-50">
           <CommandEmpty>No results found</CommandEmpty>
           <CommandGroup heading="Suggestions" className="z-10">
             {suggestions.map((item, index) => (
