@@ -1,4 +1,4 @@
-import { Bell, Boxes, ClipboardList, CreditCard, Home, Settings } from "lucide-react";
+import { Bell, Boxes, ClipboardList, Home, Settings } from "lucide-react";
 import {NavLink, useNavigate} from "react-router-dom";
 import {cn} from "@/lib/utils.ts";
 import {Button} from "@/components/ui/button.tsx";

@@ -27,7 +27,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/use-auth";
 import ProfileNavigation from "@/components/ProfileNavigation";
-import AddProductModal from "@/components/forms/ProductForm";
 import { ProductReduxState } from "@/types/product";
 import store from "@/store/store";
 import { fetchProducts } from "@/store/productsSlice";
@@ -81,10 +80,6 @@ export default function Shop() {
           message={state.error}
         />
       )}
-
-      <div className="fixed bottom-4 right-4 z-10">
-        <AddProductModal />
-      </div>
 
       <nav className="flex justify-between items-center p-4 border-b">
         <h1 className="text-xl font-bold">Shop</h1>
