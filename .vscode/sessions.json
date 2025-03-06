@@ -65,7 +65,7 @@
         "color": "terminal.ansiRed",
         "autoExecuteCommands": true,
         "commands": [
-          "echo 'Hi, I\\'m just simple termninal'"
+          "echo 'Hi, Im just simple termninal'"
         ]
       }
     ]

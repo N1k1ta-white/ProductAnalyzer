@@ -8,6 +8,8 @@ import { ProductProperty } from 'src/entities/product-property.entity';
 import { Product } from 'src/entities/product.entity';
 import { Repository } from 'typeorm';
 import { AttributeService } from './attribute.service';
+import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
+import { paginateConfig } from 'src/util/paginate.config';
 
 // TODO: PAGINATION!!!
 const TEMP_LIMIT = 100
@@ -20,11 +22,13 @@ export class ProductService {
        private attributeService: AttributeService,
     ) {}
 
-    async getProducts(): Promise<Product[]> {
-        return this.productRepository.createQueryBuilder("product")
-            .orderBy("product.views", "DESC")
-            .limit(TEMP_LIMIT)
-            .getMany()
+    async getProducts(query : PaginateQuery) : Promise<Paginated<Product>> {
+        return paginate(query, this.productRepository, paginateConfig)
+
+        // return this.productRepository.createQueryBuilder("product")
+        //     .orderBy("product.views", "DESC")
+        //     .limit(TEMP_LIMIT)
+        //     .getMany()
     }
 
     async addProduct(productDto: ProductDto): Promise<Product> {

@@ -1,5 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
+import { PaginateQuery } from 'nestjs-paginate';
 import { ProductDto } from 'src/dto/product.dto';
 import { AttributeService } from 'src/services/attribute.service';
 import { ProductService } from 'src/services/product.service';
@@ -28,8 +29,8 @@ export class ProductController {
     }
 
     @MessagePattern(GET_PRODUCTS)
-    async getProducts() {
-        return this.productService.getProducts()
+    async getProducts(@Payload() query : PaginateQuery) {
+        return this.productService.getProducts(query)
     }
 
     @MessagePattern(ADD_VIEW)

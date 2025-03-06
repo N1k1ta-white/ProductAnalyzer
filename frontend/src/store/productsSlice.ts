@@ -3,6 +3,7 @@ import {ProductReduxState} from "../types/product";
 import fetchDataAuth from "@/lib/fetchDataAuth";
 import { CategoryReduxState } from "@/types/category";
 import fetchData from "@/lib/fetch";
+import { paginationResponse } from "@/types/paginationRespose";
 
 interface State {
     loading: boolean;
@@ -40,12 +41,12 @@ export const addProduct = createAsyncThunk<ProductReduxState, ProductReduxState>
     }
 )
 
-export const fetchProducts = createAsyncThunk<ProductReduxState[], void>(//1 - то шо получаем 2 - то шо передаем
+export const fetchProducts = createAsyncThunk<paginationResponse, void>(//1 - то шо получаем 2 - то шо передаем
     'products/fetchProducts',
     async () => {
         try {
-            const query = `${import.meta.env.VITE_API_URL}/products`;
-            return await fetchData<ProductReduxState[]>(query);
+            const query = `${import.meta.env.VITE_API_URL}/product`;
+            return await fetchData<paginationResponse>(query,{method:"GET"});
         } catch (error) {
             throw new Error((error as Error).message);
         }
@@ -81,7 +82,7 @@ const productsSlice = createSlice({
             state.loading=true;
         })
         .addCase(fetchProducts.fulfilled,(state,action) => {
-            state.products = action.payload;
+            state.products = action.payload.data;
             state.loading=false;
             state.error = null;
         })

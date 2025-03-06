@@ -56,7 +56,7 @@ export default function Shop() {
   const handleFetchProducts = async () => {
     try {
       const fetchedProducts = await store.dispatch(fetchProducts()).unwrap();
-      updateState({ products: fetchedProducts });
+      updateState({ products: fetchedProducts.data });
     } catch (error) {
       updateState({ isModalOpen: true, error: (error as Error).message });
     }
