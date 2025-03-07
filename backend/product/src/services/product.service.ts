@@ -11,9 +11,6 @@ import { AttributeService } from './attribute.service';
 import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { paginateConfig } from 'src/util/paginate.config';
 
-// TODO: PAGINATION!!!
-const TEMP_LIMIT = 100
-
 @Injectable()
 export class ProductService {
     constructor(
@@ -24,11 +21,6 @@ export class ProductService {
 
     async getProducts(query : PaginateQuery) : Promise<Paginated<Product>> {
         return paginate(query, this.productRepository, paginateConfig)
-
-        // return this.productRepository.createQueryBuilder("product")
-        //     .orderBy("product.views", "DESC")
-        //     .limit(TEMP_LIMIT)
-        //     .getMany()
     }
 
     async addProduct(productDto: ProductDto): Promise<Product> {

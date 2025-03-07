@@ -14,13 +14,13 @@ export class UserService {
     ) {}
 
     async registerUser(userDto : UserDto) : Promise<User> {
-        const exisingUser = await this.userRepository.findOne({where : {email: userDto.email}})
-        if (exisingUser) {
+        const existingUser = await this.userRepository.findOne({where : {email: userDto.email}})
+        if (existingUser) {
             throw rpcException('User already exists', HttpStatus.BAD_REQUEST)
         }
 
-        const encrypedPassword = await bcrypt.hash(userDto.password, 10)
-        const user = this.userRepository.create({...userDto, password : encrypedPassword})
+        const encryptedPassword = await bcrypt.hash(userDto.password, 10)
+        const user = this.userRepository.create({...userDto, password : encryptedPassword})
         return await this.userRepository.save(user)
     }
 

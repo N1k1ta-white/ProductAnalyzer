@@ -24,9 +24,7 @@ export class ProductController {
 
     @Get()
     @Public()
-    async getProducts(@Paginate() query: any, @Req() req: Request) {
-        console.log(query)
-        
+    async getProducts(@Paginate() query: any) {        
         return this.productClient.send(GET_PRODUCTS, query)
     }
 
