@@ -29,7 +29,7 @@ export const addProduct = createAsyncThunk<ProductReduxState, ProductReduxState>
                 body: JSON.stringify({
                     name: product.name,
                     quantity: product.quantity,
-                    categoryId: product.categoryName,
+                    categoryId: product.categoryId,
                     description: product.description,
                     price: product.price,
                     properties: product.properties

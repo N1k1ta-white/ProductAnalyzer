@@ -11,7 +11,7 @@ const products: ProductReduxState[] = [
         id: 1,
         name: "Apple iPhone 14",
         quantity: 50,
-        categoryName: "Smartphones",
+        categoryId: "Smartphones",
         price: 999,
         description: "A powerful smartphone with an A15 Bionic chip and advanced camera system.",
         properties: [
@@ -23,7 +23,7 @@ const products: ProductReduxState[] = [
         id: 2,
         name: "Samsung Galaxy S23",
         quantity: 30,
-        categoryName: "Smartphones",
+        categoryId: "Smartphones",
         price: 899,
         description: "A flagship phone with Snapdragon 8 Gen 2 and 120Hz display.",
         properties: [
@@ -35,7 +35,7 @@ const products: ProductReduxState[] = [
         id: 3,
         name: "Sony WH-1000XM5",
         quantity: 25,
-        categoryName: "Headphones",
+        categoryId: "Headphones",
         price: 399,
         description: "High-quality noise-canceling wireless headphones.",
         properties: [
@@ -47,7 +47,7 @@ const products: ProductReduxState[] = [
         id: 4,
         name: "Dell XPS 15",
         quantity: 15,
-        categoryName: "Laptops",
+        categoryId: "Laptops",
         price: 1799,
         description: "A high-end laptop with an OLED display and Intel Core i7.",
         properties: [
@@ -59,7 +59,7 @@ const products: ProductReduxState[] = [
         id: 5,
         name: "PlayStation 5",
         quantity: 20,
-        categoryName: "Gaming Consoles",
+        categoryId: "Gaming Consoles",
         price: 499,
         description: "The latest PlayStation console with a powerful GPU and SSD storage.",
         properties: [
@@ -71,7 +71,7 @@ const products: ProductReduxState[] = [
         id: 6,
         name: "Apple MacBook Air M2",
         quantity: 40,
-        categoryName: "Laptops",
+        categoryId: "Laptops",
         price: 1199,
         description: "A sleek and powerful laptop with Apple's M2 chip.",
         properties: [
@@ -83,7 +83,7 @@ const products: ProductReduxState[] = [
         id: 7,
         name: "Samsung 4K Smart TV",
         quantity: 18,
-        categoryName: "TVs",
+        categoryId: "TVs",
         price: 799,
         description: "A stunning 55-inch 4K TV with HDR and smart features.",
         properties: [
@@ -95,7 +95,7 @@ const products: ProductReduxState[] = [
         id: 8,
         name: "Bose QuietComfort Earbuds II",
         quantity: 35,
-        categoryName: "Earbuds",
+        categoryId: "Earbuds",
         price: 249,
         description: "Premium noise-canceling wireless earbuds with superior sound quality.",
         properties: [
@@ -107,7 +107,7 @@ const products: ProductReduxState[] = [
         id: 9,
         name: "Logitech MX Master 3",
         quantity: 50,
-        categoryName: "Accessories",
+        categoryId: "Accessories",
         price: 99,
         description: "An ergonomic and highly customizable wireless mouse.",
         properties: [
@@ -119,7 +119,7 @@ const products: ProductReduxState[] = [
         id: 10,
         name: "Nikon Z6 II",
         quantity: 12,
-        categoryName: "Cameras",
+        categoryId: "Cameras",
         price: 1999,
         description: "A high-performance full-frame mirrorless camera for professionals.",
         properties: [

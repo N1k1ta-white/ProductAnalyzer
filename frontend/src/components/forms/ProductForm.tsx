@@ -42,7 +42,7 @@ export function ProductForm({productToEdit}: Props) {
     const [product, setProduct] = useState<ProductReduxState>(productToEdit || {
         name: "",
         quantity: 1,
-        categoryName: "",
+        categoryId: "",
         price: 0,
         description: "",
         properties: [],
@@ -116,7 +116,7 @@ export function ProductForm({productToEdit}: Props) {
         e.preventDefault();
         try {
             console.log("Product added:", product);
-            product.categoryName = 1;
+            product.categoryId = 1;
             await store.dispatch(addProduct(product)).unwrap();
             setIsModalOpen(false);
         } catch (error) {
@@ -185,8 +185,8 @@ export function ProductForm({productToEdit}: Props) {
                 <div className="w-full flex flex-col gap-2">
                   <Label htmlFor="categoryId">Category</Label>
                   <Select
-                    value={product.categoryName as string}
-                    onValueChange={(e) => setProduct({ ...product, categoryName: e })}
+                    value={product.categoryId as string}
+                    onValueChange={(e) => setProduct({ ...product, categoryId: e })}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a category" />

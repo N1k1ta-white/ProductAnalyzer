@@ -1,0 +1,73 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v10/terminal-keeper.json",
+  "theme": "tribe",
+  "active": "default",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "default": [
+      {
+        "name": "git",
+        "icon": "logo-github",
+        "color": "terminal.ansiBrightWhite",
+        "autoExecuteCommands": true,
+        "commands": [
+          "git status --porcelain"
+        ]
+      },
+      {
+        "name": "docker",
+        "icon": "package",
+        "color": "terminal.ansiBrightBlue",
+        "autoExecuteCommands": true,
+        "commands": [
+          "cd ./backend/db; docker-compose up -d"
+        ]
+      },
+      {
+        "name": "frontend",
+        "icon": "preview",
+        "color": "terminal.ansiBrightYellow",
+        "autoExecuteCommands": true,
+        "commands": [
+          "cd ./frontend; npm run dev"
+        ]
+      },
+      [
+        {
+          "name": "auth",
+          "icon": "symbol-method",
+          "autoExecuteCommands": true,
+          "commands": [
+            "cd backend/auth/; npm run start:dev"
+          ]
+        },
+        {
+          "name": "product",
+          "icon": "symbol-method",
+          "autoExecuteCommands": true,
+          "commands": [
+            "cd backend/product/; npm run start:dev"
+          ]
+        },
+        {
+          "name": "gateway",
+          "icon": "symbol-method",
+          "autoExecuteCommands": true,
+          "commands": [
+            "cd backend/gateway/; npm run start:dev"
+          ]
+        }
+      ],
+      {
+        "name": "terminal",
+        "icon": "terminal-cmd",
+        "color": "terminal.ansiRed",
+        "autoExecuteCommands": true,
+        "commands": [
+          "echo 'Hi, Im just simple termninal'"
+        ]
+      }
+    ]
+  }
+}

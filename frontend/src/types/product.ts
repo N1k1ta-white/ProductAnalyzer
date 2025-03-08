@@ -2,7 +2,8 @@ export interface ProductReduxState {
     id?: number;
     name: string;
     quantity: number;
-    categoryName?: string | number;
+    ownerId: number;
+    categoryId?: string | number;
     price: number;
     description: string;
     properties: ProductAttribute[];
