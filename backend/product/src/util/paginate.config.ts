@@ -7,7 +7,7 @@ export const paginateConfig: PaginateConfig<Product> = {
      * Type: (keyof CatEntity)[]
      * Description: These are the columns that are valid to be sorted by.
      */
-    sortableColumns: ['id', 'name', 'views'],
+    sortableColumns: ['id', 'name', 'views', 'price'],
   
     /**
      * Required: false
@@ -31,7 +31,7 @@ export const paginateConfig: PaginateConfig<Product> = {
      * Description: These columns will be searched through when using the search query
      * param. Limit search scope further by using `searchBy` query param.
      */
-    searchableColumns: ['name', 'categoryId'],
+    searchableColumns: ['name', 'category.id', 'ownerId'],
   
     /**
      * Required: false
@@ -41,8 +41,9 @@ export const paginateConfig: PaginateConfig<Product> = {
      * https://typeorm.io/select-query-builder#partial-selection
      * Note: You must include the primary key in the selection.
      */
-    // select: ['id', 'name', 'views'],
-  
+    // select: ['id', 'name', 'price', 'quantity', 'category.id', 'ownerId', 'description',
+      // 'views', 'properties.id', 'properties.value', 'properties.attr'],
+
     /**
      * Required: false
      * Type: number
@@ -73,14 +74,17 @@ export const paginateConfig: PaginateConfig<Product> = {
      * Default: None
      * https://typeorm.io/#/find-options/advanced-options
      */
-    filterableColumns: { views: [FilterOperator.EQ, FilterOperator.IN] },
+    filterableColumns: { views: [FilterOperator.EQ, FilterOperator.IN, FilterOperator.GT,
+       FilterOperator.LT], price: [FilterOperator.EQ, FilterOperator.IN, FilterOperator.GT,
+       FilterOperator.LT], ownerId: [FilterOperator.EQ, FilterOperator.IN], 
+       category: [FilterOperator.EQ, FilterOperator.IN] },
   
     /**
      * Required: false
      * Type: RelationColumn<CatEntity>
      * Description: Indicates what relations of entity should be loaded.
      */
-    relations: ['properties', 'properties.attr'],
+    relations: ['properties', 'properties.attr', 'category'],
   
     /**
      * Required: false

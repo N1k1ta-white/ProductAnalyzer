@@ -1,18 +1,13 @@
+import { Type } from "class-transformer";
 import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
-export class AttributeDto {
-
+export class CategoryDto {
     @IsNumber()
     @IsNotEmpty()
-    @IsOptional()
     id: number;
 
     @IsString()
     @IsNotEmpty()
-    name: string;
-
-    @IsNumber()
-    @IsNotEmpty()
     @IsOptional()
-    usage: number;
+    name: string;
 }

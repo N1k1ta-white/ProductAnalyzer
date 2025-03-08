@@ -1,5 +1,6 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductProperty } from './product-property.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Product {
@@ -15,8 +16,8 @@ export class Product {
     @Column({default: 1})
     quantity: number;
 
-    @Column({nullable: true})
-    categoryId: number;
+    @ManyToOne(() => Category, category => category.products, {nullable: false})
+    category: Category;
 
     @Column()
     ownerId: number;

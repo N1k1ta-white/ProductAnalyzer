@@ -1,7 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { HttpStatus, Injectable, UseInterceptors } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { AttributeDto } from 'src/dto/attribute.dto';
-import { ProductPropertyDto } from 'src/dto/product-property.dto';
 import { ProductDto } from 'src/dto/product.dto';
 import { Attribute } from 'src/entities/attribute.entity';
 import { ProductProperty } from 'src/entities/product-property.entity';
@@ -10,12 +8,16 @@ import { Repository } from 'typeorm';
 import { AttributeService } from './attribute.service';
 import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { paginateConfig } from 'src/util/paginate.config';
+import { Category } from 'src/entities/category.entity';
+import { rpcException } from 'src/util/exception';
+import { PaginatedProductInterceptor } from 'src/util/paginated-product.interceptor';
 
 @Injectable()
 export class ProductService {
     constructor(
        @InjectRepository(Product) private productRepository: Repository<Product>,
        @InjectRepository(ProductProperty) private prodAttrRepository: Repository<ProductProperty>,
+       @InjectRepository(Category) private categoryRepository: Repository<Category>,
        private attributeService: AttributeService,
     ) {}
 
@@ -24,6 +26,13 @@ export class ProductService {
     }
 
     async addProduct(productDto: ProductDto): Promise<Product> {
+        const category = 
+                await this.categoryRepository.findOne({ where: { id: productDto.categoryId } })
+
+        if (!category) {
+            throw rpcException("Category not found", HttpStatus.NOT_FOUND)
+        }
+
         let attributesEntities : Attribute[] = 
                 await this.attributeService.getAttrEntities(productDto.properties)
 
@@ -36,6 +45,7 @@ export class ProductService {
             })
         });
 
+        product.category = category
         product.properties = productProperties
 
         return this.productRepository.save(product)
@@ -43,5 +53,19 @@ export class ProductService {
 
     addView(id: number) {
         this.productRepository.increment({id}, "views", 1)
+    }
+
+    getViewsByCategory(categoryId: number, userId: number) {
+        return this.productRepository.createQueryBuilder()
+            .select("SUM(views)", "views")
+            .where("categoryId = :categoryId", {categoryId})
+            .andWhere("ownerId = :userId", {userId})
+            .getRawOne()
+    }
+
+    getCategories() {
+        return this.productRepository.createQueryBuilder()
+            .select("DISTINCT categoryId")
+            .getRawMany()
     }
 }
