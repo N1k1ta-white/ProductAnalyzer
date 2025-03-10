@@ -43,6 +43,16 @@
           ]
         },
         {
+          "name": "gateway",
+          "icon": "symbol-method",
+          "autoExecuteCommands": true,
+          "commands": [
+            "cd backend/gateway/; npm run start:dev"
+          ]
+        }
+      ],
+      [
+        {
           "name": "product",
           "icon": "symbol-method",
           "autoExecuteCommands": true,
@@ -51,11 +61,11 @@
           ]
         },
         {
-          "name": "gateway",
+          "name": "order",
           "icon": "symbol-method",
           "autoExecuteCommands": true,
           "commands": [
-            "cd backend/gateway/; npm run start:dev"
+            "cd backend/order/; npm run start:dev"
           ]
         }
       ],
