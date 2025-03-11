@@ -10,7 +10,6 @@ import { paginate, Paginated, PaginateQuery } from 'nestjs-paginate';
 import { paginateConfig } from 'src/util/paginate.config';
 import { Category } from 'src/entities/category.entity';
 import { rpcException } from 'src/util/exception';
-import { PaginatedProductInterceptor } from 'src/util/paginated-product.interceptor';
 
 @Injectable()
 export class ProductService {
@@ -68,4 +67,51 @@ export class ProductService {
             .select("DISTINCT categoryId")
             .getRawMany()
     }
+
+    async checkAvailabilityAndBuy(product: { productId: number; quantity: number }[]) {
+        return await this.productRepository.manager.transaction(async transactionalEntityManager => {
+            // Step 1: Find products with insufficient stock and lock them
+            const insufficientProducts = await transactionalEntityManager
+                .createQueryBuilder(Product, 'product')
+                .setLock('pessimistic_write')
+                .select(['product.id', 'product.quantity'])
+                .where('product.id IN (:...productIds)', { productIds: product.map(p => p.productId) })
+                .andWhere(
+                    `product.quantity < CASE 
+                        ${product.map(p => `WHEN id = ${p.productId} THEN ${p.quantity}`).join(' ')}
+                        ELSE 0 END`
+                )
+                .getMany();
+                
+            // If there are insufficient products, throw an error
+            if (insufficientProducts.length > 0) {
+                throw rpcException(
+                    `Not enough stock for products: ${insufficientProducts.map(p => `ID ${p.id} (Only ${p.quantity} left)`).join(', ')}`,
+                    HttpStatus.BAD_REQUEST
+                );
+            }
+    
+            // Step 2: Perform the batch update
+            await transactionalEntityManager
+                .createQueryBuilder()
+                .update(Product)
+                .set({
+                    quantity: () => `CASE 
+                        ${product.map(p => `WHEN id = ${p.productId} THEN quantity - ${p.quantity}`).join(' ')} 
+                        ELSE quantity END`
+                })
+                .where('id IN (:...productIds)', { productIds: product.map(p => p.productId) })
+                .execute();
+        });
+    }
+
+    fetchProductPrices(productIds: number[]) {
+        return this.productRepository.createQueryBuilder('product')
+            .select('product.id', 'productId')
+            .addSelect('product.price', 'price')
+            .whereInIds(productIds)
+            .getRawMany();
+    }
+    
+    // TODO: What we will do if we will wait for payment of customer???
 }

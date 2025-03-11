@@ -1,6 +1,7 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ProductProperty } from './product-property.entity';
 import { Category } from './category.entity';
+import { Min } from 'class-validator';
 
 @Entity()
 export class Product {
@@ -14,6 +15,7 @@ export class Product {
     price: number;
 
     @Column({default: 1})
+    @Min(0)
     quantity: number;
 
     @ManyToOne(() => Category, category => category.products, {nullable: false})

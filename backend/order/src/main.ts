@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { HttpStatus, ValidationPipe } from '@nestjs/common';
-import { RpcException, Transport } from '@nestjs/microservices';
+import { BaseRpcExceptionFilter, RpcException, Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const microservice = await NestFactory.createMicroservice(AppModule, {

@@ -12,7 +12,11 @@ export class OrderItem {
 
     @Column()
     @Min(1)
-    amount: number;
+    quantity: number;
+
+    @Column()
+    @Min(0)
+    price: number;
 
     @ManyToOne(() => Order, order => order.products)
     order: OrderItem;

@@ -12,6 +12,8 @@ const GET_PRODUCTS = "getPopularProducts"
 const ADD_VIEW = "addProductView"
 const GET_VIEWS_BY_CATEGORY = "getViewsByCategory"
 const GET_CATEGORIES = "getCategories"
+const CHECK_AVAILABILITY_AND_BUY = "checkAvailabilityAndBuy"
+const FETCH_PRICES = "fetchPrices"
 
 @Controller()
 export class ProductController {
@@ -50,5 +52,15 @@ export class ProductController {
     @MessagePattern(GET_CATEGORIES)
     async getCategories() {
         return this.productService.getCategories()
+    }
+
+    @MessagePattern(CHECK_AVAILABILITY_AND_BUY)
+    async checkProductsAvailability(@Payload() products : { productId : number, quantity : number }[]) {
+        return this.productService.checkAvailabilityAndBuy(products)
+    }
+
+    @MessagePattern(FETCH_PRICES)
+    async fetchProductPrices(@Payload() productIds : number[]) {
+        return this.productService.fetchProductPrices(productIds)
     }
 }

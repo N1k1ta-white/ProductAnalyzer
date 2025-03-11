@@ -11,14 +11,10 @@ export class Order {
     @Column()
     customer: number;
 
-    @Column()
-    @Min(0)
-    price: number;
-
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
     date: Date;
 
-    @OneToMany(() => OrderItem, orderProduct => orderProduct.order)
+    @OneToMany(() => OrderItem, orderProduct => orderProduct.order, {eager: true, cascade: true})
     products: OrderItem[];
 
     @Column()

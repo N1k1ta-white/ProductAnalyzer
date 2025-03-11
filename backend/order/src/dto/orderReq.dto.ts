@@ -19,5 +19,5 @@ export class OrderProdReqDto {
     @IsNumber()
     @IsNotEmpty()
     @IsOptional()
-    amount: number;
+    quantity: number;
 }
