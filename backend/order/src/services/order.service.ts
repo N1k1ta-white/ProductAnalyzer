@@ -76,7 +76,7 @@ export class OrderService {
         const products = this.mapToProductRequest(orderDto.products);
         const prices = await this.fetchProductPrices(products);
         await this.checkAvailabilityAndPurchase(products);
-        
+
         const priceMap = this.createPriceMap(prices);
         const totalSum = this.calculateTotalSum(products, priceMap);
         

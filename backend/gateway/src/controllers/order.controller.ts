@@ -6,20 +6,22 @@ const GET_ORDERS_BY_CUSTOMER = 'getOrdersByCustomer';
 
 @Controller('order')
 export class OrderController {
+  constructor(
+    @Inject('ORDER_SERVICE') private readonly orderClient: ClientProxy,
+  ) {}
 
-    constructor(
-        @Inject('ORDER_SERVICE') private readonly orderClient: ClientProxy
-    ) {}
+  @Post()
+  createOrder(@Request() req, @Body() payload: any) {
+    const id = req.user.id;
+    return this.orderClient.send(CREATE_ORDER, {
+      customerId: id,
+      products: payload.cart,
+    });
+  }
 
-    @Post()
-    createOrder(@Request() req, @Body() payload: any) {
-        const id = req.user.id;
-        return this.orderClient.send(CREATE_ORDER, {customerId: id, products: payload.cart});
-    }
-
-    @Get()
-    getOrdersByCustomer(@Request() req) {
-        const id = req.user.id;
-        return this.orderClient.send(GET_ORDERS_BY_CUSTOMER, {customerId: id});
-    }
+  @Get()
+  getOrdersByCustomer(@Request() req) {
+    const id = req.user.id;
+    return this.orderClient.send(GET_ORDERS_BY_CUSTOMER, { customerId: id });
+  }
 }

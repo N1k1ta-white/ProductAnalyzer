@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import ModalProps from "@/components/modals/ModalProps.tsx";
-import { ProductReduxState } from "@/types/product.ts"; // Adjust path if needed
+import { ProductReduxState } from "@/types/product.ts"; 
 import { addProduct } from "@/store/productsSlice.ts";
 import store from "@/store/store.ts";
 import ModalError from "../modals/ModalError.tsx";
@@ -42,7 +42,8 @@ export function ProductForm({productToEdit}: Props) {
     const [product, setProduct] = useState<ProductReduxState>(productToEdit || {
         name: "",
         quantity: 1,
-        categoryId: "",
+        ownerId: 0,
+        category: {id:0,name:""},
         price: 0,
         description: "",
         properties: [],
@@ -116,7 +117,7 @@ export function ProductForm({productToEdit}: Props) {
         e.preventDefault();
         try {
             console.log("Product added:", product);
-            product.categoryId = 1;
+            product.category.id = 1;
             await store.dispatch(addProduct(product)).unwrap();
             setIsModalOpen(false);
         } catch (error) {
@@ -185,8 +186,8 @@ export function ProductForm({productToEdit}: Props) {
                 <div className="w-full flex flex-col gap-2">
                   <Label htmlFor="categoryId">Category</Label>
                   <Select
-                    value={product.categoryId as string}
-                    onValueChange={(e) => setProduct({ ...product, categoryId: e })}
+                    value={product.category.name}
+                    onValueChange={(e) => setProduct({ ...product,  category: {id:0,name:e} })}
                   >
                     <SelectTrigger className="w-full">
                       <SelectValue placeholder="Select a category" />

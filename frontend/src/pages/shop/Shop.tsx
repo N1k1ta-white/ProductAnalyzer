@@ -32,6 +32,7 @@ import store from "@/store/store";
 import { fetchProducts } from "@/store/productsSlice";
 import ModalError from "@/components/modals/ModalError";
 import { SearchBlock } from "@/components/forms/SerchBlock";
+import { useNavigate } from "react-router-dom";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -68,8 +69,12 @@ export default function Shop() {
   }, []);
 
   const handleAddToCart = (id?: number) => {
-    console.log("Gonna add product with id - " + id);
+    
   };
+  const navigate = useNavigate();
+  const openProduct = (id: number) => {
+    navigate(`/products/${id}`)
+  }
 
   return (
     <div className="p-4 w-full display-flex h-screen-full">
@@ -123,6 +128,7 @@ export default function Shop() {
             <Card key={card.id}>
               <CardHeader className="flex justify-center w-full items-center">
                 <img
+                  onClick={ () => {openProduct(card.id as number)}}
                   src="https://github.com/shadcn.png"
                   alt=""
                   className="w-32 h-auto"
@@ -133,12 +139,14 @@ export default function Shop() {
                 <CardDescription>{card.description}</CardDescription>
               </CardContent>
               <CardContent>
-                <CardDescription>{card.price}</CardDescription>
+                <CardDescription>{card.price}$</CardDescription>
               </CardContent>
               <CardFooter>
+              {isAuthenticated ? (
                 <Button onClick={() => handleAddToCart(card.id)}>
                   Add to Cart
-                </Button>
+                </Button>) :
+                 (<></>)}
               </CardFooter>
             </Card>
           ))}
