@@ -83,4 +83,8 @@ export class OrderService {
         const order = this.createOrderEntity(orderDto, products, priceMap, totalSum);
         return this.orderRepository.save(order);
     }
+
+    async getOrdersByCustomer(customerId: number) {
+        return this.orderRepository.find({ where: { customer: customerId } });
+    }
 }

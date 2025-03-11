@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Inject, Param, Patch, Post, Request } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { Paginate } from 'nestjs-paginate';
-import { Public } from 'src/public.decorator';
+import { Public } from 'src/util/public.decorator';
 
 const ADD_PRODUCT = "addProduct"
 const PRODUCT_SERVICE = "PRODUCT_SERVICE"

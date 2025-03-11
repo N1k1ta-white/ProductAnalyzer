@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { Public } from 'src/public.decorator';
+import { Public } from 'src/util/public.decorator';
 
 const PRODUCT_SERVICE = "PRODUCT_SERVICE"
 const GET_POPULAR_ATTRIBUTES = "getPopularAttributes"
