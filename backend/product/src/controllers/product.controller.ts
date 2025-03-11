@@ -5,6 +5,7 @@ import { ProductDto } from 'src/dto/product.dto';
 import { AttributeService } from 'src/services/attribute.service';
 import { ProductService } from 'src/services/product.service';
 import { PaginatedProductInterceptor } from 'src/util/paginated-product.interceptor';
+import { ProductInterceptor } from 'src/util/product.interceptor';
 
 const ADD_PRODUCT = "addProduct"
 const GET_POPULAR_ATTRIBUTES = "getPopularAttributes"
@@ -24,6 +25,7 @@ export class ProductController {
     ) {}
 
     @MessagePattern(ADD_PRODUCT)
+    @UseInterceptors(ProductInterceptor)
     async addProduct(@Payload() productDto : ProductDto) {
         return this.productService.addProduct(productDto)
     }

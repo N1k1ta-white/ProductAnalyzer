@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository, } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderReqDto } from 'src/dto/orderReq.dto';
@@ -18,7 +18,6 @@ export class OrderService {
         @Inject('PRODUCT_SERVICE') private readonly orderClient: ClientProxy
     ) {}
 
-    // TODO: Implement adequate error handling 
     async createOrder(orderDto: OrderReqDto) {
         // Get products from product microservice
         const products = orderDto.products.map(product => 
@@ -31,14 +30,14 @@ export class OrderService {
                 products.map(product => product.productId)));
         } catch (error) {
             // Handle microservice communication errors
-            throw new RpcException(`Failed to get bill: ${error.message}`);
+            throw new BadRequestException(`Failed to get bill: ${error.message}`);
         }
 
         // Check product availability and buy
         try {
             await firstValueFrom(this.orderClient.send(CHECK_AVAILABILITY_AND_BUY, products));
         } catch (error) {
-            throw new RpcException(error.message);
+            throw new BadRequestException("Failed to check availability and buy: " + error.message);
         }
 
         let priceMap = new Map(prices.map(price => [price.productId, price.price]));

@@ -12,7 +12,6 @@ export class OrderController {
 
     @MessagePattern(CREATE_ORDER)
     async createOrder(data: OrderReqDto) {
-        this.orderService.createOrder(data);
-        return { message: 'Order created', data };
+        return this.orderService.createOrder(data);
     }
 }

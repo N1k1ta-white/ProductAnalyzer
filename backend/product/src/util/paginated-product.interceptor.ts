@@ -2,7 +2,6 @@ import { ExecutionContext, NestInterceptor, Injectable, CallHandler } from "@nes
 import { instanceToPlain } from "class-transformer";
 import { Paginate, Paginated } from "nestjs-paginate";
 import { map, Observable } from "rxjs";
-import { ProductDto } from "src/dto/product.dto";
 import { Product } from "src/entities/product.entity";
 
 @Injectable()

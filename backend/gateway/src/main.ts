@@ -7,7 +7,7 @@ async function bootstrap() {
   app.enableCors({
     origin: [process.env.FRONTEND_URL ?? 'http://localhost:3000'],
     credentials: true,
-    alllowHeaders: ['Content-Type', 'Authorization'],
+    allowHeaders: ['Content-Type', 'Authorization'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   })
   app.useGlobalFilters(new RpcExceptionsFilter())
