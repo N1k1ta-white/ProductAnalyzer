@@ -9,6 +9,8 @@ import { JwtGuard } from './jwt/jwt.guard';
 import { ProductController } from './controllers/product.controller';
 import { AttributeController } from './controllers/attribute.controller';
 import { OrderController } from './controllers/order.controller';
+import { ChatGateway } from './gateway/chat.controller';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [RabbitMqModule,
@@ -16,7 +18,7 @@ import { OrderController } from './controllers/order.controller';
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
   controllers: [AuthController, ProductController, AttributeController, OrderController],
-  providers: [JwtStrategy, 
+  providers: [JwtStrategy, ChatGateway, JwtService,
     {
       provide: APP_GUARD,
       useClass: JwtGuard,

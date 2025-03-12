@@ -9,6 +9,7 @@ import {RootState} from "@/store/store.ts";
 
 function ChatTest() {
     const inputRef = useRef<HTMLInputElement>(null); // Исправлено: useRef<HTMLInputElement>
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const user = useSelector((state: RootState) => state.authData.user);
     const [messages, setMessages] = useState<MessageReduxState[]>([]);
 
@@ -24,20 +25,25 @@ function ChatTest() {
         }
 
         function onMessage(value: MessageReduxState) {
+            console.log("Message received:", value);
             setMessages(prevMessages => [...prevMessages, value]); // Добавляем новое сообщение в state
         }
 
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
-        socket.on("clientToServer", onMessage);
+        socket.on("serverToClient", onMessage);
 
         return () => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
-            socket.off("clientToServer", onMessage);
+            socket.off("serverToClient", onMessage);
             socket.disconnect();
         };
     }, []);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     function sendMessage() {
         if (!inputRef.current) return;
@@ -52,7 +58,7 @@ function ChatTest() {
         };
 
         socket.emit("clientToServer", newMessage);
-        setMessages(prev => [...prev, newMessage]); // Локально добавляем сообщение в state
+        setMessages(prevMessages => [...prevMessages, newMessage]);
         inputRef.current.value = ""; // Очищаем поле ввода
     }
 
@@ -67,6 +73,7 @@ function ChatTest() {
                 ) : (
                     <p className="text-gray-500">No messages yet.</p>
                 )}
+                <div ref={messagesEndRef} />
             </div>
             <div className="p-4 flex items-center">
                 <Input
