@@ -7,10 +7,14 @@ import { Button } from "@/components/ui/button.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store/store.ts";
 
+interface OpenAIAnswer {
+
+}
+
 function ChatTest() {
     const inputRef = useRef<HTMLInputElement>(null); // Исправлено: useRef<HTMLInputElement>
     const user = useSelector((state: RootState) => state.authData.user);
-    const [messages, setMessages] = useState<MessageReduxState[]>([]);
+    const [messages, setMessages] = useState<OpenAIAnswer[]>([]);
 
     useEffect(() => {
         socket.connect();
@@ -23,18 +27,18 @@ function ChatTest() {
             console.log("Disconnected");
         }
 
-        function onMessage(value: MessageReduxState) {
+        function onMessage(value: OpenAIAnswer) {
             setMessages(prevMessages => [...prevMessages, value]); // Добавляем новое сообщение в state
         }
 
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
-        socket.on("clientToServer", onMessage);
+        socket.on("serverToClient", onMessage);
 
         return () => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
-            socket.off("clientToServer", onMessage);
+            socket.off("serverToClient", onMessage);
             socket.disconnect();
         };
     }, []);
@@ -44,8 +48,7 @@ function ChatTest() {
         const text = inputRef.current.value.trim();
         if (text.length === 0) return;
 
-        const newMessage: MessageReduxState = {
-            receiver: {id: 2, type: 'private'},
+        const newMessage = {
             message: text,
             senderId: user!.id, // Здесь можно привязать пользователя
             timestamp: new Date().toISOString(),
