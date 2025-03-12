@@ -14,6 +14,7 @@ import Orders from "@/pages/profile/orders/Orders.tsx";
 import OrderUpdate from "@/pages/profile/orders/OrderUpdate.tsx";
 import Notifications from "@/pages/profile/Notifications.tsx";
 import Settings from "./pages/profile/Settings.tsx";
+import Chats from "@/pages/profile/chat/Chats.tsx";
 import ProtectedRoute from "@/pages/authorization/ProtectedRoute.tsx";
 import PublicRoute from "@/pages/authorization/PublicRoute.tsx";
 import ProductView from "@/pages/shop/ProductView.tsx";
@@ -66,6 +67,7 @@ const router = createBrowserRouter([
                     { path: "profile/orders/:id", element: <OrderUpdate /> },
                     { path: "profile/notifications", element: <Notifications /> },
                     { path: "profile/settings", element: <Settings /> },
+                    { path: "profile/chats", element: <Chats/>},
                 ],
             }
         ]

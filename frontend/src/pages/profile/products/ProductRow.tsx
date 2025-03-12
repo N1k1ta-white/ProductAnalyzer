@@ -30,9 +30,9 @@ export default function ProductRow({product, className}: Props) {
             <td className='text-left p-3 text-sm/6 text-zinc-950'>
                 <ul>
                     {
-                        product.properties.map((prop) => {
+                        product.properties.map((prop, key) => {
                             return (
-                                <li>
+                                <li key={key}>
                                     {prop.name}:{prop.value}
                                 </li>
                             )

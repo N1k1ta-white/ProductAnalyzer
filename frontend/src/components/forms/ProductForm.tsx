@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/select.tsx";
 import { damerauLevenshtein } from "@/lib/utils.ts";
 import { Card } from "@/components/ui/card.tsx";
+import {FaPencil} from "react-icons/fa6";
 
 const categorise = ["Дом", "Одежда", "Электроника"];
 const popularAttributes = [
@@ -155,7 +156,9 @@ export function ProductForm({productToEdit}: Props) {
           message={state.error}
         />
       )}
-      <Button onClick={() => setIsModalOpen(true)}>Add Product</Button>
+
+        {!productToEdit && <Button onClick={() => setIsModalOpen(true)}>Add Product</Button>}
+        {productToEdit && <button onClick={() => setIsModalOpen(true)}> <FaPencil/> </button>}
 
       <ModalProps
         className="w-[50rem]"

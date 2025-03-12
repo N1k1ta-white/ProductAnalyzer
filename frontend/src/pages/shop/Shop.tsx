@@ -32,11 +32,14 @@ import store from "@/store/store";
 import { fetchProducts } from "@/store/productsSlice";
 import ModalError from "@/components/modals/ModalError";
 import { SearchBlock } from "@/components/forms/SerchBlock";
+import {FaEnvelope} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function Shop() {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   // Merged state
   const [state, setState] = useState({
@@ -92,11 +95,18 @@ export default function Shop() {
         <NavigationMenu>
           <NavigationMenuList className="flex gap-4">
             {isAuthenticated ? (
-              <NavigationMenuItem>
-                <div className="flex gap-4">
-                  <ProfileNavigation />
-                </div>
-              </NavigationMenuItem>
+                <>
+                  <NavigationMenuItem>
+                    <div className="flex gap-4">
+                      <FaEnvelope size={24} onClick={() => navigate("/profile/chats")}/>
+                    </div>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <div className="flex gap-4">
+                      <ProfileNavigation />
+                    </div>
+                  </NavigationMenuItem>
+                </>
             ) : (
               <>
                 <NavigationMenuItem>

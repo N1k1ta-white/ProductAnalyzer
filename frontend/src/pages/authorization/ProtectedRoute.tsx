@@ -1,7 +1,7 @@
 import {Navigate, NavLink, Outlet, useNavigate} from "react-router-dom";
 import {useAuth} from "@/hooks/use-auth.tsx"; // Импорт корневого состояния
 import ProfileNavigation from "@/components/ProfileNavigation";
-import {Bell, Boxes, ClipboardList, Home, Settings} from "lucide-react";
+import {Bell, Boxes, ClipboardList, Home, Settings, MessageCircle} from "lucide-react";
 import {cn} from "@/lib/utils.ts";
 import {Card} from "@/components/ui/card.tsx";
 
@@ -13,6 +13,7 @@ const ProtectedRoute = () => {
         { path: "profile/products", label: "Products", icon: <Boxes className="size-5" /> }, // Товары
         { path: "profile/orders", label: "Orders", icon: <ClipboardList className="size-5" /> }, // Заказы (список)`
         { path: "profile/notifications", label: "Notifications", icon: <Bell className="size-5" /> },
+        { path: "profile/chats", label: "Chats", icon: <MessageCircle className="size-5" /> }, // Настройки
         { path: "profile/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
     ];
     return isAuthenticated ? (
