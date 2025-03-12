@@ -7,14 +7,11 @@ import { Button } from "@/components/ui/button.tsx";
 import {useSelector} from "react-redux";
 import {RootState} from "@/store/store.ts";
 
-interface OpenAIAnswer {
-
-}
-
 function ChatTest() {
     const inputRef = useRef<HTMLInputElement>(null); // Исправлено: useRef<HTMLInputElement>
+    const messagesEndRef = useRef<HTMLDivElement>(null);
     const user = useSelector((state: RootState) => state.authData.user);
-    const [messages, setMessages] = useState<OpenAIAnswer[]>([]);
+    const [messages, setMessages] = useState<MessageReduxState[]>([]);
 
     useEffect(() => {
         socket.connect();
@@ -27,35 +24,41 @@ function ChatTest() {
             console.log("Disconnected");
         }
 
-        function onMessage(value: OpenAIAnswer) {
+        function onMessage(value: MessageReduxState) {
+            console.log("Message received:", value);
             setMessages(prevMessages => [...prevMessages, value]); // Добавляем новое сообщение в state
         }
 
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
-        socket.on("serverToClient", onMessage);
+        socket.on("clientToServer", onMessage);
 
         return () => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
-            socket.off("serverToClient", onMessage);
+            socket.off("clientToServer", onMessage);
             socket.disconnect();
         };
     }, []);
+
+    useEffect(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
 
     function sendMessage() {
         if (!inputRef.current) return;
         const text = inputRef.current.value.trim();
         if (text.length === 0) return;
 
-        const newMessage = {
+        const newMessage: MessageReduxState = {
+            receiver: {id: 2, type: 'private'},
             message: text,
             senderId: user!.id, // Здесь можно привязать пользователя
             timestamp: new Date().toISOString(),
         };
 
         socket.emit("clientToServer", newMessage);
-        setMessages(prev => [...prev, newMessage]); // Локально добавляем сообщение в state
+        setMessages(prevMessages => [...prevMessages, newMessage]);
         inputRef.current.value = ""; // Очищаем поле ввода
     }
 
@@ -70,6 +73,7 @@ function ChatTest() {
                 ) : (
                     <p className="text-gray-500">No messages yet.</p>
                 )}
+                <div ref={messagesEndRef} />
             </div>
             <div className="p-4 flex items-center">
                 <Input

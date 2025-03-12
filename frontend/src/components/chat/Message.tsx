@@ -20,12 +20,12 @@ function Message({ message }: Props) {
         }
     }
     return (
-        <div className={`flex ${isMyMessage ? "justify-end" : "justify-start"} my-2`}>
+        <div className={`flex ${isMyMessage ? "justify-start" : "justify-end"} my-2`}>
             <div className="flex items-center gap-2 ">
                 <div className="text-gray-500">{formatTimestamp(message.timestamp)}</div>
                 <div
                     className={`max-w-xs p-3 rounded-lg shadow-md ${
-                        isMyMessage ? "bg-blue-500 text-white" : "bg-gray-200 text-black"
+                        isMyMessage ? "bg-gray-200 text-black" : "bg-blue-500 text-white"
                     }`}
                 >
                     {message.message}
