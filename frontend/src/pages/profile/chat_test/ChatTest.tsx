@@ -39,25 +39,21 @@ function ChatTest() {
         };
     }, []);
 
-    // function sendMessage() {
-    //     if (!inputRef.current) return;
-    //     const text = inputRef.current.value.trim();
-    //     if (text.length === 0) return;
-    //
-    //     const newMessage: MessageReduxState = {
-    //         receiver: {id: 2, type: 'private'},
-    //         message: text,
-    //         senderId: user!.id, // Здесь можно привязать пользователя
-    //         timestamp: new Date().toISOString(),
-    //     };
-    //
-    //     socket.emit("message", newMessage);
-    //     setMessages(prev => [...prev, newMessage]); // Локально добавляем сообщение в state
-    //     inputRef.current.value = ""; // Очищаем поле ввода
-    // }
+    function sendMessage() {
+        if (!inputRef.current) return;
+        const text = inputRef.current.value.trim();
+        if (text.length === 0) return;
 
-    function sendMessage(){
-        socket.emit("clientToServer", inputRef.current);
+        const newMessage: MessageReduxState = {
+            receiver: {id: 2, type: 'private'},
+            message: text,
+            senderId: user!.id, // Здесь можно привязать пользователя
+            timestamp: new Date().toISOString(),
+        };
+
+        socket.emit("message", newMessage);
+        setMessages(prev => [...prev, newMessage]); // Локально добавляем сообщение в state
+        inputRef.current.value = ""; // Очищаем поле ввода
     }
 
     return (
