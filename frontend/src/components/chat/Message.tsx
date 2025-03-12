@@ -1,7 +1,7 @@
-import { IMessage } from "@/types/chat.ts";
+import { MessageReduxState } from "@/types/chat.ts";
 
 interface Props {
-    message: IMessage;
+    message: MessageReduxState;
 }
 
 function Message({ message }: Props) {

@@ -1,14 +1,13 @@
-export interface IMessage {
-    id?: number
-    newRoom?: IRoom; //если это первое сообщение в чате (чат только создан и серв должен вернуть мне его)
-    roomId: number;
+export interface MessageReduxState {
     senderId: number;
+    receiver: {id: number, type: "private" | "room"}
     message: string;
     timestamp: string
 }
-export interface IRoom {
+
+export interface RoomsReduxState {
     id: number
-    messages: IMessage[]
+    messages: MessageReduxState[]
     users: { id: number; name: string }[]
     checked: boolean
 }

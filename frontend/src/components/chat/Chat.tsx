@@ -6,11 +6,11 @@ import {addMessage, setCurrentRoom} from "@/store/roomsSlice.ts";
 import {useSelector} from "react-redux";
 import Message from "@/components/chat/Message.tsx";
 import {Input} from "@/components/ui/input.tsx";
-import {IMessage} from "@/types/chat.ts";
+import {MessageReduxState} from "@/types/chat.ts";
 
 interface Props {
     roomId: number;
-    messages: IMessage[];
+    messages: MessageReduxState[];
 }
 function Chat({ roomId, messages }: Props) {
     const [message, setMessage] = useState("");
@@ -35,8 +35,7 @@ function Chat({ roomId, messages }: Props) {
             socket.emit("message", { roomId, text: message }, (response: { success: boolean }) => {
                 if (response.success) {
                     store.dispatch(addMessage({
-                        id: roomId,
-                        roomId: roomId,
+                        receiver: {id: roomId, type: "room"},
                         senderId: user!.id,
                         message: message,
                         timestamp: new Date().toISOString(),

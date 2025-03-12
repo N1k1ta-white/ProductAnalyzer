@@ -20,6 +20,7 @@ import PublicRoute from "@/pages/authorization/PublicRoute.tsx";
 import ProductView from "@/pages/shop/ProductView.tsx";
 import SellerView from "@/pages/shop/SellerView.tsx";
 import Shop from "@/pages/shop/Shop.tsx";
+import ChatTest from "@/pages/profile/chat_test/ChatTest.tsx";
 
 
 const router = createBrowserRouter([
@@ -68,6 +69,7 @@ const router = createBrowserRouter([
                     { path: "profile/notifications", element: <Notifications /> },
                     { path: "profile/settings", element: <Settings /> },
                     { path: "profile/chats", element: <Chats/>},
+                    { path: "profile/chat", element: <ChatTest/>},
                 ],
             }
         ]

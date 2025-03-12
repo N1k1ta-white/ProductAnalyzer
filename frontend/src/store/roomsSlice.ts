@@ -1,8 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {IMessage, IRoom} from "@/types/chat.ts";
+import {MessageReduxState, RoomsReduxState} from "@/types/chat.ts";
 
 interface State {
-    rooms: IRoom[];
+    rooms: RoomsReduxState[];
     currentRoomId: number
     loading: boolean;
     error: string | null;
@@ -10,7 +10,7 @@ interface State {
 
 const initialState: State = {
     rooms: [],
-    currentRoomId: 1,
+    currentRoomId: 0,
     loading: false,
     error: null,
 }
@@ -23,14 +23,14 @@ const chatSlice = createSlice({
         updateError: (state, action: PayloadAction<string | null>) => {
             state.error = action.payload;
         },
-        updateRooms: (state, action: PayloadAction<IRoom[]>) => {
+        updateRooms: (state, action: PayloadAction<RoomsReduxState[]>) => {
             state.rooms = action.payload; // Полностью заменяет список комнат
         },
-        addRoom: (state, action: PayloadAction<IRoom>) => {
+        addRoom: (state, action: PayloadAction<RoomsReduxState>) => {
             state.rooms.push(action.payload);
         },
-        addMessage: (state, action: PayloadAction<IMessage>) => {
-            const room = state.rooms.find(room => room.id === action.payload.roomId);
+        addMessage: (state, action: PayloadAction<MessageReduxState>) => {
+            const room = state.rooms.find(room => room.id === action.payload.receiver.id);
             room!.messages = [...room!.messages, action.payload];
             room!.checked = state.currentRoomId === room!.id;
         },

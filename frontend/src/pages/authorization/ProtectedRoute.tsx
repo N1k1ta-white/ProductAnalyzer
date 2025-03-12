@@ -13,6 +13,7 @@ const ProtectedRoute = () => {
         { path: "profile/products", label: "Products", icon: <Boxes className="size-5" /> }, // Товары
         { path: "profile/orders", label: "Orders", icon: <ClipboardList className="size-5" /> }, // Заказы (список)`
         { path: "profile/notifications", label: "Notifications", icon: <Bell className="size-5" /> },
+        { path: "profile/chat", label: "Chat", icon: <MessageCircle className="size-5" /> }, // Настройки
         { path: "profile/chats", label: "Chats", icon: <MessageCircle className="size-5" /> }, // Настройки
         { path: "profile/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
     ];

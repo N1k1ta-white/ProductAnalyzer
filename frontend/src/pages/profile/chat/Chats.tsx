@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { socket } from "@/socket.ts";
-import {addMessage, addRoom, setCurrentRoom} from "@/store/roomsSlice.ts";
-import {IMessage, IRoom} from "@/types/chat.ts";
+import {addMessage, setCurrentRoom} from "@/store/roomsSlice.ts";
+import {MessageReduxState, RoomsReduxState} from "@/types/chat.ts";
 import store, { RootState } from "@/store/store.ts";
 import { useSelector } from "react-redux";
 import Error from "@/pages/Error.tsx";
@@ -9,13 +9,13 @@ import { Card } from "@/components/ui/card.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import Chat from "@/components/chat/Chat.tsx";
 
-function generateRandomRooms(numRooms: number): IRoom[] {
-    const rooms: IRoom[] = [];
+function generateRandomRooms(numRooms: number): RoomsReduxState[] {
+    const rooms: RoomsReduxState[] = [];
     const commonUser = {id: 1, name: 'Roma'}; // Один общий пользователь для всех комнат
 
     for (let i = 0; i < numRooms; i++) {
         const randomUser = generateRandomUsers(1)[0];
-        const room: IRoom = {
+        const room: RoomsReduxState = {
             id: i + 1,
             messages: shuffleArray(generateRandomMessages(20, commonUser.id).concat(generateRandomMessages(20, randomUser.id))) , // Генерация минимум 50 сообщений
             users: [randomUser, commonUser], // Один и тот же пользователь в каждой комнате
@@ -35,14 +35,13 @@ function shuffleArray<T>(array: T[]): T[] {
     return array;
 }
 
-function generateRandomMessages(numMessages: number, senderId: number): IMessage[] {
-    const messages: IMessage[] = [];
+function generateRandomMessages(numMessages: number, senderId: number): MessageReduxState[] {
+    const messages: MessageReduxState[] = [];
     for (let i = 0; i < numMessages; i++) {
-        const message: IMessage = {
-            id: i + 1,
+        const message: MessageReduxState = {
             message: `Message #${i + 1}`, // Пример осмысленного сообщения
             senderId: senderId, // Все сообщения от одного пользователя
-            roomId: 1, // Указываем ID комнаты (можно подстроить под каждый случай)
+            receiver: {id: 1, type: "room"}, // Указываем ID комнаты (можно подстроить под каждый случай)
             timestamp: new Date().toISOString(), // Время отправки сообщения
         };
         messages.push(message);
@@ -81,12 +80,12 @@ function Chats() {
             console.log("Disconnected");
         }
 
-        function onMessage(value: IMessage) {
-            const room = rooms.find(room => room.id === value.roomId)
+        function onMessage(value: MessageReduxState) {
+            const room = rooms.find(room => room.id === value.receiver.id)
             if(room) {
                 store.dispatch(addMessage(value));
             } else {
-                store.dispatch(addRoom(value.newRoom!));
+                store.dispatch(fetchRoom(value.newRoom!));
             }
         }
 
