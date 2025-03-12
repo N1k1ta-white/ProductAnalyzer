@@ -6,10 +6,9 @@ const GET_ORDERS_BY_CUSTOMER = 'getOrdersByCustomer';
 
 @Controller('order')
 export class OrderController {
-
-    constructor(
-        @Inject('ORDER_SERVICE') private readonly orderClient: ClientProxy
-    ) {}
+  constructor(
+    @Inject('ORDER_SERVICE') private readonly orderClient: ClientProxy,
+  ) {}
 
     @Post()
     createOrder(@Request() req, @Body() payload: any) {

@@ -34,7 +34,7 @@ export const fetchLoginUser = createAsyncThunk<{user:AuthUserReduxState,token:st
                 body: JSON.stringify({
                     email: loginData.email,
                     password: loginData.password,
-                  })
+                }),
             });
         } catch (error) {
             throw new Error((error as Error).message);

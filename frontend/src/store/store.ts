@@ -1,13 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import productReducer from "./productsSlice.ts"
-import orderReducer from "./ordersSlice.ts"
-import authReducer from "./authSlice.ts"
+import productReducer from "@/store/productsSlice.ts"
+import orderReducer from "@/store/ordersSlice.ts"
+import authReducer from "@/store/authSlice.ts"
+import chatReducer from "@/store/roomsSlice.ts"
 
 const store = configureStore({
     reducer: {
         authData: authReducer,
         productsData: productReducer,
         ordersData: orderReducer,
+        chatData: chatReducer
     }
 })
 

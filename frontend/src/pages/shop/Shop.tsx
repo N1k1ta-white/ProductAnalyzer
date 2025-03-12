@@ -32,11 +32,14 @@ import store from "@/store/store";
 import { fetchProducts } from "@/store/productsSlice";
 import ModalError from "@/components/modals/ModalError";
 import { SearchBlock } from "@/components/forms/SerchBlock";
+import {FaEnvelope} from "react-icons/fa";
+import {useNavigate} from "react-router-dom";
 
 const ITEMS_PER_PAGE = 6;
 
 export default function Shop() {
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   // Merged state
   const [state, setState] = useState({
@@ -68,8 +71,11 @@ export default function Shop() {
   }, []);
 
   const handleAddToCart = (id?: number) => {
-    console.log("Gonna add product with id - " + id);
+
   };
+  const openProduct = (id: number) => {
+    navigate(`/products/${id}`)
+  }
 
   return (
     <div className="p-4 w-full display-flex h-screen-full">
@@ -92,11 +98,18 @@ export default function Shop() {
         <NavigationMenu>
           <NavigationMenuList className="flex gap-4">
             {isAuthenticated ? (
-              <NavigationMenuItem>
-                <div className="flex gap-4">
-                  <ProfileNavigation />
-                </div>
-              </NavigationMenuItem>
+                <>
+                  <NavigationMenuItem>
+                    <div className="flex gap-4">
+                      <FaEnvelope size={24} onClick={() => navigate("/profile/chats")}/>
+                    </div>
+                  </NavigationMenuItem>
+                  <NavigationMenuItem>
+                    <div className="flex gap-4">
+                      <ProfileNavigation />
+                    </div>
+                  </NavigationMenuItem>
+                </>
             ) : (
               <>
                 <NavigationMenuItem>
@@ -123,6 +136,7 @@ export default function Shop() {
             <Card key={card.id}>
               <CardHeader className="flex justify-center w-full items-center">
                 <img
+                  onClick={ () => {openProduct(card.id as number)}}
                   src="https://github.com/shadcn.png"
                   alt=""
                   className="w-32 h-auto"
@@ -133,12 +147,14 @@ export default function Shop() {
                 <CardDescription>{card.description}</CardDescription>
               </CardContent>
               <CardContent>
-                <CardDescription>{card.price}</CardDescription>
+                <CardDescription>{card.price}$</CardDescription>
               </CardContent>
               <CardFooter>
+              {isAuthenticated ? (
                 <Button onClick={() => handleAddToCart(card.id)}>
                   Add to Cart
-                </Button>
+                </Button>) :
+                 (<></>)}
               </CardFooter>
             </Card>
           ))}
