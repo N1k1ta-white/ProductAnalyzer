@@ -29,12 +29,12 @@ function ChatTest() {
 
         socket.on("connect", onConnect);
         socket.on("disconnect", onDisconnect);
-        socket.on("message", onMessage);
+        socket.on("clientToServer", onMessage);
 
         return () => {
             socket.off("connect", onConnect);
             socket.off("disconnect", onDisconnect);
-            socket.off("message", onMessage);
+            socket.off("clientToServer", onMessage);
             socket.disconnect();
         };
     }, []);
@@ -51,7 +51,7 @@ function ChatTest() {
             timestamp: new Date().toISOString(),
         };
 
-        socket.emit("message", newMessage);
+        socket.emit("clientToServer", newMessage);
         setMessages(prev => [...prev, newMessage]); // Локально добавляем сообщение в state
         inputRef.current.value = ""; // Очищаем поле ввода
     }

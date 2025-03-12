@@ -21,6 +21,7 @@ import ProductView from "@/pages/shop/ProductView.tsx";
 import SellerView from "@/pages/shop/SellerView.tsx";
 import Shop from "@/pages/shop/Shop.tsx";
 import ChatTest from "@/pages/profile/chat_test/ChatTest.tsx";
+import { fetchMe } from "./store/authSlice.ts";
 
 
 const router = createBrowserRouter([
@@ -28,6 +29,20 @@ const router = createBrowserRouter([
 
         path: "/",
         element: <Root />,
+        loader: async () => {
+            const state = store.getState();
+            const user = state.authData.user;
+            if (user) {
+                console.log("Пользователь уже загружен:", user);
+                return user;
+            }
+            try {
+                return await store.dispatch(fetchMe()).unwrap();
+            } catch (error) {
+                console.error("Ошибка загрузки данных пользователя:", error);
+                throw error;
+            }
+        },
         errorElement: <Error message={'Несуществующая страничка'} />,
         children: [
             { index: true, element: <Shop/> },
@@ -46,20 +61,6 @@ const router = createBrowserRouter([
                     {
                         path:"profile/dashboard",
                         element: <Dashboard />,
-                        // loader: async () => {
-                        //     const state = store.getState();
-                        //     const user = state.authData.user;
-                        //     if (user) {
-                        //         console.log("Пользователь уже загружен:", user);
-                        //         return user;
-                        //     }
-                        //     try {
-                        //         return await store.dispatch(fetchUser()).unwrap();
-                        //     } catch (error) {
-                        //         console.error("Ошибка загрузки данных пользователя:", error);
-                        //         throw error;
-                        //     }
-                        // }
                     },
                     { path: "profile/products", element: <Products /> },
                     { path: "profile/products/create", element: <ProductCreate /> },

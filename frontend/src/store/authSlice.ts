@@ -65,7 +65,7 @@ export const fetchMe = createAsyncThunk<AuthUserReduxState, void>(//1 - то ш�
     'auth/fetchMe',
     async () => {
         try {
-            const query = `${import.meta.env.VITE_API_URL}/fetchMe`;
+            const query = `${import.meta.env.VITE_API_URL}/profile`;
             return await fetchDataAuth<AuthUserReduxState>(query);
         } catch (error) {
             throw new Error((error as Error).message);
