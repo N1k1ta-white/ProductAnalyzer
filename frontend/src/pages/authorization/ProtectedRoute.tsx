@@ -4,6 +4,9 @@ import ProfileNavigation from "@/components/ProfileNavigation";
 import {Bell, Boxes, ClipboardList, Home, Settings, MessageCircle} from "lucide-react";
 import {cn} from "@/lib/utils.ts";
 import {Card} from "@/components/ui/card.tsx";
+import {useEffect} from "react";
+import store from "@/store/store.ts";
+import {fetchMe} from "@/store/authSlice.ts";
 
 const ProtectedRoute = () => {
     const { isAuthenticated } = useAuth()
@@ -17,6 +20,23 @@ const ProtectedRoute = () => {
         { path: "profile/chats", label: "Chats", icon: <MessageCircle className="size-5" /> }, // Настройки
         { path: "profile/settings", label: "Settings", icon: <Settings className="size-5" /> }, // Настройки
     ];
+    useEffect(() => {
+        const check =  async () => {
+            const state = store.getState();
+            const user = state.authData.user;
+            if (user) {
+                console.log("Пользователь уже загружен:", user);
+                return user;
+            }
+            try {
+                return await store.dispatch(fetchMe()).unwrap();
+            } catch (error) {
+                console.error("Ошибка загрузки данных пользователя:", error);
+                throw error;
+            }
+        }
+        check()
+    }, [])
     return isAuthenticated ? (
         <Card className="bg-white m-10 h-[calc(100dvh-5rem)] flex flex-col">
             <header className="w-full flex items-center justify-start px-4 gap-12 border-b-[1px] border-b-gray-200">

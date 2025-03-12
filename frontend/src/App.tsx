@@ -1,7 +1,5 @@
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 
-import store from "@/store/store.ts";
-
 import Root from "./pages/Root";
 import Error from "./pages/Error";
 import Login from "./pages/authorization/Login.tsx"
@@ -21,7 +19,6 @@ import ProductView from "@/pages/shop/ProductView.tsx";
 import SellerView from "@/pages/shop/SellerView.tsx";
 import Shop from "@/pages/shop/Shop.tsx";
 import ChatTest from "@/pages/profile/chat_test/ChatTest.tsx";
-import { fetchMe } from "./store/authSlice.ts";
 
 
 const router = createBrowserRouter([
@@ -29,20 +26,6 @@ const router = createBrowserRouter([
 
         path: "/",
         element: <Root />,
-        loader: async () => {
-            const state = store.getState();
-            const user = state.authData.user;
-            if (user) {
-                console.log("Пользователь уже загружен:", user);
-                return user;
-            }
-            try {
-                return await store.dispatch(fetchMe()).unwrap();
-            } catch (error) {
-                console.error("Ошибка загрузки данных пользователя:", error);
-                throw error;
-            }
-        },
         errorElement: <Error message={'Несуществующая страничка'} />,
         children: [
             { index: true, element: <Shop/> },
