@@ -1,7 +1,8 @@
 import { OpenAI } from "openai";
+import * as process from "node:process";
 
 const openai = new OpenAI({
-  baseURL: "https://oddly-skilled-cicada.ngrok-free.app/v1", // LM Studio API endpoint
+  baseURL: `${process.env.OPEN_AI_URL ?? "https://oddly-skilled-cicada.ngrok-free.app"}/v1`, // LM Studio API endpoint
   apiKey: "sk-no-key-required", // LM Studio doesn't need a key, but OpenAI SDK requires this field
 });
 
