@@ -14,7 +14,7 @@ export class OrderController {
     @Post()
     createOrder(@Request() req, @Body() payload: any) {
         const id = req.user.id;
-        return this.orderClient.send(CREATE_ORDER, {customerId: id, products: payload.cart});
+        return this.orderClient.send(CREATE_ORDER, {customerId: id, products: payload});
     }
 
     @Get()

@@ -3,7 +3,7 @@ import { InjectRepository, } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { OrderProdReqDto, OrderReqDto } from 'src/dto/orderReq.dto';
 import { Order } from 'src/entities/order.entity';
-import { ClientProxy, RpcException } from '@nestjs/microservices';
+import { ClientProxy } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { OrderStatus } from 'src/util/order-status.enum';
 
