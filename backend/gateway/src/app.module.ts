@@ -3,18 +3,19 @@ import { RabbitMqModule } from './rabbit-mq/rabbit-mq.module';
 import { AuthController } from './controllers/auth.controller';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from './jwt.strategy';
+import { JwtStrategy } from './jwt/jwt.strategy';
 import { APP_GUARD } from '@nestjs/core';
-import { JwtGuard } from './jwt.guard';
+import { JwtGuard } from './jwt/jwt.guard';
 import { ProductController } from './controllers/product.controller';
 import { AttributeController } from './controllers/attribute.controller';
+import { OrderController } from './controllers/order.controller';
 
 @Module({
   imports: [RabbitMqModule,
     ConfigModule.forRoot(),
     PassportModule.register({ defaultStrategy: 'jwt' }),
   ],
-  controllers: [AuthController, ProductController, AttributeController],
+  controllers: [AuthController, ProductController, AttributeController, OrderController],
   providers: [JwtStrategy, 
     {
       provide: APP_GUARD,

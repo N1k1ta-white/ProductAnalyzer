@@ -1,8 +1,11 @@
+import { CategoryReduxState } from "./category";
+
 export interface ProductReduxState {
     id?: number;
     name: string;
     quantity: number;
-    categoryName?: string | number;
+    ownerId: number;
+    category: CategoryReduxState;
     price: number;
     description: string;
     properties: ProductAttribute[];

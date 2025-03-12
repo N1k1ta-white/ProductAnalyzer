@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Inject, Post, Headers, UseFilters } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
 import { BaseRpcExceptionFilter, ClientProxy } from '@nestjs/microservices';
-import { Public } from 'src/public.decorator';
+import { Public } from 'src/util/public.decorator';
 import { getToken } from 'src/util/getToken';
 
 const REGISTER_USER = "register"

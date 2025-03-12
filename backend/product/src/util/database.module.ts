@@ -4,6 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ProductProperty } from 'src/entities/product-property.entity';
 import { Product } from 'src/entities/product.entity';
 import { Attribute } from 'src/entities/attribute.entity';
+import { Category } from 'src/entities/category.entity';
 
 @Module({
   imports: [
@@ -15,11 +16,11 @@ import { Attribute } from 'src/entities/attribute.entity';
       username: process.env.MYSQL_USER || 'root',
       password: process.env.MYSQL_PASSWORD || 'password',
       database: process.env.MYSQL_DATABASE || 'mysql',
-      entities: [Product, ProductProperty, Attribute],
+      entities: [Product, ProductProperty, Attribute, Category],
       synchronize: true,
     }),
-    TypeOrmModule.forFeature([Product, ProductProperty, Attribute]),
+    TypeOrmModule.forFeature([Product, ProductProperty, Attribute, Category]),
   ],
-  exports: [TypeOrmModule.forFeature([Product, ProductProperty, Attribute])],
+  exports: [TypeOrmModule.forFeature([Product, ProductProperty, Attribute, Category])],
 })
 export class DatabaseModule {}

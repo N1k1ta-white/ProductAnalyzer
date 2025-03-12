@@ -23,7 +23,7 @@ export class ProductDto {
 
     @IsNumber()
     @IsNotEmpty()
-    @IsOptional()
+    @Type(() => Number)
     categoryId: number;
 
     @IsNumber()

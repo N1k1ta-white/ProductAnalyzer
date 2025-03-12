@@ -71,8 +71,11 @@ export default function Shop() {
   }, []);
 
   const handleAddToCart = (id?: number) => {
-    console.log("Gonna add product with id - " + id);
+
   };
+  const openProduct = (id: number) => {
+    navigate(`/products/${id}`)
+  }
 
   return (
     <div className="p-4 w-full display-flex h-screen-full">
@@ -133,6 +136,7 @@ export default function Shop() {
             <Card key={card.id}>
               <CardHeader className="flex justify-center w-full items-center">
                 <img
+                  onClick={ () => {openProduct(card.id as number)}}
                   src="https://github.com/shadcn.png"
                   alt=""
                   className="w-32 h-auto"
@@ -143,12 +147,14 @@ export default function Shop() {
                 <CardDescription>{card.description}</CardDescription>
               </CardContent>
               <CardContent>
-                <CardDescription>{card.price}</CardDescription>
+                <CardDescription>{card.price}$</CardDescription>
               </CardContent>
               <CardFooter>
+              {isAuthenticated ? (
                 <Button onClick={() => handleAddToCart(card.id)}>
                   Add to Cart
-                </Button>
+                </Button>) :
+                 (<></>)}
               </CardFooter>
             </Card>
           ))}
